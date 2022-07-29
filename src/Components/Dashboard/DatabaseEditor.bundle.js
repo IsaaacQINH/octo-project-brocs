@@ -1,8 +1,13 @@
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+
 const DatabaseEditor = () => {
   return (
-    <div>
-      <h2>DatabaseEditor</h2>
-    </div>
+    <Box>
+      <Toolbar />
+      <Typography variant="h1">DatabaseViewer</Typography>
+    </Box>
   );
 };
 
