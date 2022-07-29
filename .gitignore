@@ -1,0 +1,10 @@
+node_modules/
+.parcel-cache/
+dist/
+coverage/
+.vscode/
+.idea/
+
+project-brocs.iml
+.env
+.DS_Store
