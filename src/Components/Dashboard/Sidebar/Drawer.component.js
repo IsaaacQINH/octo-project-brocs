@@ -9,20 +9,18 @@ import * as React from "react";
 import { ListAlt, Monitor, Storage, Workspaces } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-const drawerContent = [
-  ["CurrentMatch", "Standings", "Database"],
-  ["WIP"]
-];
+const drawerContent = [["CurrentMatch", "Standings", "Database"], ["WIP"]];
 
 const drawerIcons = [
-  [<Monitor key="current"/>, <ListAlt key="standings"/>, <Storage key="database"/>],
-  [<Workspaces key="WIP"/>]
+  [
+    <Monitor key="current" />,
+    <ListAlt key="standings" />,
+    <Storage key="database" />,
+  ],
+  [<Workspaces key="WIP" />],
 ];
 
-const drawerRouter = [
-  ['current', 'standings', 'database'],
-  ['']
-];
+const drawerRouter = [["current", "standings", "database"], [""]];
 
 const drawer = (
   <div>
@@ -30,12 +28,14 @@ const drawer = (
     <Divider />
     <List>
       {drawerContent[0].map((text, index) => (
-        <Link key={text} to={drawerRouter[0][index]} style={{textDecoration: "none", color: "black"}}>
+        <Link
+          key={text}
+          to={drawerRouter[0][index]}
+          style={{ textDecoration: "none", color: "black" }}
+        >
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {drawerIcons[0][index]}
-              </ListItemIcon>
+              <ListItemIcon>{drawerIcons[0][index]}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
@@ -45,7 +45,11 @@ const drawer = (
     <Divider />
     <List>
       {drawerContent[1].map((text, index) => (
-        <Link key={text} to={drawerRouter[1][index]} style={{textDecoration: "none", color: "black"}}>
+        <Link
+          key={text}
+          to={drawerRouter[1][index]}
+          style={{ textDecoration: "none", color: "black" }}
+        >
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
