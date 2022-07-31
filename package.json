@@ -1,6 +1,6 @@
 {
   "name": "project-brocs",
-  "version": "Alpha-0.1",
+  "version": "0.1",
   "description": "A tool to betterify Rocket League streams",
   "main": "src/App.js",
   "scripts": {

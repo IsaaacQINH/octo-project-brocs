@@ -9,6 +9,8 @@ import Home from "./Components/Website/Home.bundle";
 import About from "./Components/Website/About.bundle";
 import Standings from "./Components/Dashboard/Standings.bundle";
 import OverlayPage from "./Pages/Overlay.page";
+import Overview from "./Components/Dashboard/Overview.bundle";
+import Login from "./Components/Website/Login.bundle";
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="dashboard" element={<DashboardPage />}>
+            <Route path="" element={<Overview />} />
             <Route path="current" element={<CurrentMatch />} />
             <Route path="standings" element={<Standings />} />
             <Route path="database" element={<DatabaseEditor />} />
@@ -23,8 +26,10 @@ const App = () => {
           <Route path="/" element={<WebsitePage />}>
             <Route path="" element={<Home />} />
             <Route path="about" element={<About />} />
+            <Route path="signout" element={<About />} />
           </Route>
           <Route path="overlay" element={<OverlayPage />} />
+          <Route path="login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </StrictMode>

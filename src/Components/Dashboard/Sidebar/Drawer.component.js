@@ -1,4 +1,3 @@
-import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -6,13 +5,15 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
-import { ListAlt, Monitor, Storage, Workspaces } from "@mui/icons-material";
+import { Dashboard, ListAlt, Monitor, Storage, Workspaces } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import Account from "./Account.component";
 
-const drawerContent = [["CurrentMatch", "Standings", "Database"], ["WIP"]];
+const drawerContent = [["Overview", "CurrentMatch", "Standings", "Database"], ["WIP"]];
 
 const drawerIcons = [
   [
+    <Dashboard key="overview" />,
     <Monitor key="current" />,
     <ListAlt key="standings" />,
     <Storage key="database" />,
@@ -20,11 +21,11 @@ const drawerIcons = [
   [<Workspaces key="WIP" />],
 ];
 
-const drawerRouter = [["current", "standings", "database"], [""]];
+const drawerRouter = [["", "current", "standings", "database"], [""]];
 
 const drawer = (
   <div>
-    <Toolbar />
+    <Account />
     <Divider />
     <List>
       {drawerContent[0].map((text, index) => (
