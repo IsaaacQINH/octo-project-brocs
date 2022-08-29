@@ -32,7 +32,6 @@ const drawer = (
         <Link
           key={text}
           to={drawerRouter[0][index]}
-          style={{ textDecoration: "none", color: "black" }}
         >
           <ListItem disablePadding>
             <ListItemButton>
@@ -49,7 +48,6 @@ const drawer = (
         <Link
           key={text}
           to={drawerRouter[1][index]}
-          style={{ textDecoration: "none", color: "black" }}
         >
           <ListItem disablePadding>
             <ListItemButton>
