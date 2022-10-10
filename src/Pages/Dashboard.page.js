@@ -5,14 +5,18 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import drawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
 import { useState } from "react";
+import Account from "../Components/Dashboard/Sidebar/Account.component";
+import Divider from "@mui/material/Divider";
+import * as React from "react";
+import { supabase } from "../Helper/supabaseClient";
 
 const drawerWidth = 240;
 
 const ResponsiveDrawer = (props) => {
+  const user = supabase.auth.user();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -26,8 +30,7 @@ const ResponsiveDrawer = (props) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-
-  return (
+  return (user ?
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
@@ -47,9 +50,7 @@ const ResponsiveDrawer = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Match ID
-          </Typography>
+          {"Project"}
         </Toolbar>
       </AppBar>
       <Box
@@ -87,6 +88,8 @@ const ResponsiveDrawer = (props) => {
           }}
           open
         >
+          <Account user={user}/>
+          <Divider />
           {drawer}
         </Drawer>
       </Box>
@@ -94,13 +97,12 @@ const ResponsiveDrawer = (props) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
         <Outlet />
       </Box>
-    </Box>
+    </Box> : <Navigate to="/login" />
   );
 };
 

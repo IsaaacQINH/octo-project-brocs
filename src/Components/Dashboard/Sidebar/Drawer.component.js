@@ -7,7 +7,6 @@ import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import { Dashboard, ListAlt, Monitor, Storage, Workspaces } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import Account from "./Account.component";
 
 const drawerContent = [["Overview", "CurrentMatch", "Standings", "Database"], ["WIP"]];
 
@@ -25,8 +24,6 @@ const drawerRouter = [["", "current", "standings", "database"], [""]];
 
 const drawer = (
   <div>
-    <Account />
-    <Divider />
     <List>
       {drawerContent[0].map((text, index) => (
         <Link

@@ -36,10 +36,10 @@ const App = () => {
             <Route path="/" element={<WebsitePage />}>
               <Route path="" element={<Home />} />
               <Route path="about" element={<About />} />
-              <Route path="signout" element={<About />} />
             </Route>
             <Route path="overlay" element={<OverlayPage />} />
             <Route path="login" element={<Login />} />
+            <Route path="logout" element={<About />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

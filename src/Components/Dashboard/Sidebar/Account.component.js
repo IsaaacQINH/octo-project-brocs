@@ -13,13 +13,13 @@ import { ArrowDropDown } from "@mui/icons-material";
  *    (Profile page, Settings, Project selection, Signout)
  */
 
-const Account = () => {
+const Account = ({user}) => {
   return (
     <Box sx={{ p: 2 }}>
-      <Avatar>YT</Avatar>
+      <Avatar alt={user ? user.user_metadata.full_name : "name"} src={user ? user.user_metadata.avatar_url : "null"} />
       <Box sx={{ display: "flex", textAlign: "left", alignItems: "center"}}>
         <Typography sx={{ mt: 2, width: "90%"}} variant="body1">
-          York Treinies
+          {user ? user.user_metadata.full_name : "NullAccount"}
         </Typography>
         <Tooltip title="Account Options" style={{alignSelf: "flex-end"}}>
           <IconButton size="small">
