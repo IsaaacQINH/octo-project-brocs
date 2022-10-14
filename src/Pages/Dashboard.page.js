@@ -7,25 +7,61 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import { Navigate, Outlet } from "react-router-dom";
 import drawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Account from "../Components/Dashboard/Sidebar/Account.component";
 import Divider from "@mui/material/Divider";
 import * as React from "react";
 import { supabase } from "../Helper/supabaseClient";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const drawerWidth = 240;
 
 const ResponsiveDrawer = (props) => {
-  const user = supabase.auth.user();
   const { window } = props;
+  const user = supabase.auth.user();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [projects, setProjects] = useState(null);
+  const [project, setProject] = useState("");
+
+  useEffect(() => {
+    const getProjects = async () => {
+      const fetch = await supabase
+        .from('user')
+        .select('projects')
+        .eq('id', user.id).single();
+
+      if (!fetch.data) {
+        return setProjects([]);
+      }
+
+      const {data} = await supabase
+        .from('project')
+        .select('id, name')
+        .in('id', fetch.data.projects);
+
+      if (!data) {
+        return setProjects([]);
+      }
+
+      setProjects(data);
+    }
+
+    getProjects().then().catch();
+  }, [user]);
 
   const drawer = drawerComponent;
+  const projectList = projects ? projects.map((values, index) =>
+    <MenuItem key={index} value={values.id}>{values.name}</MenuItem>
+  ) : [];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleProjectSelect = (e) => {
+    e.preventDefault();
+    setProject(e.target.value);
+  }
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -38,6 +74,7 @@ const ResponsiveDrawer = (props) => {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+
         }}
       >
         <Toolbar>
@@ -50,7 +87,20 @@ const ResponsiveDrawer = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          {"Project"}
+          <FormControl sx={{m: 1, minWidth: 300}}>
+            <InputLabel id="project-select-label" size="small">Project</InputLabel>
+            <Select
+              size="small"
+              variant="outlined"
+              labelId="project-select-label"
+              value={project}
+              onChange={handleProjectSelect}
+            >
+              <MenuItem value="">Choose a project</MenuItem>
+              <Divider />
+              {projectList}
+            </Select>
+          </FormControl>
         </Toolbar>
       </AppBar>
       <Box
@@ -100,7 +150,7 @@ const ResponsiveDrawer = (props) => {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <Outlet />
+        <Outlet context={project} />
       </Box>
     </Box> : <Navigate to="/login" />
   );

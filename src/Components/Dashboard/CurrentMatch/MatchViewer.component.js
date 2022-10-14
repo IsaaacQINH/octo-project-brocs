@@ -11,8 +11,7 @@ const MatchViewer = () => {
   const generalSettingsRef = useRef();
 
   const handleUpdate = () => {
-    const general = generalSettingsRef.current?.getSettings();
-    console.log(general);
+    //const general = generalSettingsRef.current?.getSettings();
   }
 
   return (
@@ -21,7 +20,7 @@ const MatchViewer = () => {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <GeneralSettings ref={generalSettingsRef}/>
-          <Divider sx={{mt:1}}/>
+          <Divider sx={{mt:3}}/>
           <Typography sx={{mt:1}}>Teams</Typography>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -29,6 +28,10 @@ const MatchViewer = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <TeamSettings side="orange" />
+        </Grid>
+        <Grid item xs={12}>
+          <Divider sx={{mt:3}}/>
+          <Typography sx={{mt:1}}>Replays</Typography>
         </Grid>
       </Grid>
       <Fab sx={{position: 'fixed', bottom: 15, right: 250}} size="small" variant="circular" color="success" aria-label="new">

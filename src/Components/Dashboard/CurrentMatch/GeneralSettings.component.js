@@ -45,10 +45,10 @@ const GeneralSettings = forwardRef((props, _ref) => {
         onChange={handleDateChange}
         label="Date"
         value={match.date}
-        renderInput={(params) => <TextField fullWidth sx={{mt: 1}} size="small" {...params} />}
+        renderInput={(params) => <TextField fullWidth sx={{mt: 2}} size="small" {...params} />}
       />
       <TextField
-        sx={{mt: 1}}
+        sx={{mt: 2}}
         fullWidth
         size="small"
         variant="outlined"

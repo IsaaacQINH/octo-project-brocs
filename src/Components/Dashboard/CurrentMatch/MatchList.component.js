@@ -4,20 +4,21 @@ import { ListItem } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
-const MatchList = () => {
+const MatchList = ({ matches }) => {
+  const matchList = matches.map((value, index) =>
+    (
+      <ListItem key={index} disablePadding>
+        <ListItemButton>
+          <ListItemText primary={value.name} />
+        </ListItemButton>
+      </ListItem>
+    )
+  );
+
   return (
     <Box>
       <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemText primary="TRT vs. XD" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemText primary="TRT vs. LOL" />
-          </ListItemButton>
-        </ListItem>
+        {matchList}
       </List>
     </Box>
   );
