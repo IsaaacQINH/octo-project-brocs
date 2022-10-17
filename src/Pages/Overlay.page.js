@@ -8,7 +8,6 @@ const Overlay = () => {
     const res = await fetch("http://localhost:1234");
     //const data = await res.json();
 
-    console.log(res);
     setAvaiability(res.status === 200);
 
     document.getElementById("checker").textContent = isAvaiable

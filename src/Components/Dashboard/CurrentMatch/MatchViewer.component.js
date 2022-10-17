@@ -40,7 +40,7 @@ const MatchViewer = ({matchId}) => {
   return (
     matchId ?
       <Box sx={{ pl: 1, mr: 1, height: 'calc(100vh - 60px)', borderLeft: '1px solid rgba(0,0,0,0.2)'}}>
-        <Typography variant="h5">Edit Match {matchId}</Typography>
+        <Typography variant="h5">Edit Match</Typography>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <GeneralSettings ref={generalSettingsRef}/>
