@@ -1,4 +1,16 @@
+import { useState } from "react";
+
 const TeamSettings = ({side}) => {
+  const [team, setTeam] = useState({
+    id: "",
+    name: "",
+    wins: 0
+  });
+
+  const handleWinsChange = (e) => {
+    e.preventDefault();
+    setTeam({...team, wins: e.target.value});
+  }
 
   return (
     <>
@@ -11,6 +23,8 @@ const TeamSettings = ({side}) => {
           labelId={side + "-wins-select-label"}
           id={side + "-wins-select"}
           label="Wins"
+          value={team.wins}
+          onChange={handleWinsChange}
         >
           <MenuItem value={0}>0</MenuItem>
           <MenuItem value={1}>1</MenuItem>

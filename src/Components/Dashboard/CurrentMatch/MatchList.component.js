@@ -4,11 +4,11 @@ import { ListItem } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
-const MatchList = ({ matches }) => {
+const MatchList = (({ matches, handleUpdate }) => {
   const matchList = matches.map((value, index) =>
     (
       <ListItem key={index} disablePadding>
-        <ListItemButton>
+        <ListItemButton onClick={() => handleUpdate(value.id)}>
           <ListItemText primary={value.name} />
         </ListItemButton>
       </ListItem>
@@ -22,6 +22,8 @@ const MatchList = ({ matches }) => {
       </List>
     </Box>
   );
-};
+});
+
+MatchList.displayName = "MatchListComponent";
 
 export default MatchList;

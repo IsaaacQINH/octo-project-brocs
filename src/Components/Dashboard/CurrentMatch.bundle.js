@@ -11,6 +11,7 @@ import { supabase } from "../../Helper/supabaseClient";
 const CurrentMatch = () => {
   const project = useOutletContext();
   const [matches, setMatches] = useState([]);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     const getMatches = async () => {
@@ -31,17 +32,22 @@ const CurrentMatch = () => {
     };
 
     getMatches().then().catch();
+    setSelected(null);
   }, [project]);
+
+  const handleUpdateSelectedMatch = (id) => {
+    setSelected(id);
+  }
 
   return (
     <Box>
       <Toolbar />
       <Grid container>
         <Grid item xs={4} md={3}>
-          <MatchList matches={matches}/>
+          <MatchList matches={matches} handleUpdate={handleUpdateSelectedMatch}/>
         </Grid>
         <Grid item xs={8} md={9}>
-          <MatchViewer />
+          <MatchViewer matchId={selected}/>
         </Grid>
       </Grid>
     </Box>

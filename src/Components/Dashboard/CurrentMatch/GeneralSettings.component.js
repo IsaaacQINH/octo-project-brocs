@@ -18,15 +18,16 @@ const GeneralSettings = forwardRef((props, _ref) => {
   const handleChange = (e) => {
     e.preventDefault();
     let newState = {...match, [e.target.name]: e.target.value};
-    console.log(newState);
     setMatch(newState);
-    console.log(match);
   }
 
   useImperativeHandle(_ref, () => ({
     getSettings: () => {
       return match;
     },
+    setSettings: (value) => {
+      setMatch(value)
+    }
   }));
 
   return (
