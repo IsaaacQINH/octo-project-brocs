@@ -10,6 +10,8 @@ import { supabase } from "../../../Helper/supabaseClient";
 
 const MatchViewer = ({matchId}) => {
   const generalSettingsRef = useRef();
+  const blueSideRef = useRef();
+  const orangeSideRef = useRef();
 
   useEffect(async () => {
     const getMatchData = async (id) => {
@@ -24,6 +26,18 @@ const MatchViewer = ({matchId}) => {
         format: data.format,
         date: data.gamedate
       });
+
+      blueSideRef.current?.setTeamData({
+        name: data.blue_name ?? "",
+        wins: data.blue_wins,
+        metadata: data.blue_metadata
+      });
+
+      orangeSideRef.current?.setTeamData({
+        name: data.orange_name ?? "",
+        wins: data.orange_wins,
+        metadata: data.orange_metadata
+      });
     };
 
     if (!matchId) {
@@ -35,6 +49,7 @@ const MatchViewer = ({matchId}) => {
 
   const handleUpdate = () => {
     //const general = generalSettingsRef.current?.getSettings();
+    //console.log(blueSideRef.current?.getTeamData());
   }
 
   return (
@@ -48,10 +63,10 @@ const MatchViewer = ({matchId}) => {
             <Typography sx={{mt:1}}>Teams</Typography>
           </Grid>
           <Grid item xs={12} md={6}>
-            <TeamSettings side="blue" />
+            <TeamSettings side="blue" ref={blueSideRef}/>
           </Grid>
           <Grid item xs={12} md={6}>
-            <TeamSettings side="orange" />
+            <TeamSettings side="orange" ref={orangeSideRef}/>
           </Grid>
           <Grid item xs={12}>
             <Divider sx={{mt:3}}/>

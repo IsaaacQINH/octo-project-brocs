@@ -13,13 +13,13 @@ const GeneralSettings = forwardRef((props, _ref) => {
 
   const handleDateChange = (newDate) => {
     setMatch({...match, date: newDate._d});
-  }
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
     let newState = {...match, [e.target.name]: e.target.value};
     setMatch(newState);
-  }
+  };
 
   useImperativeHandle(_ref, () => ({
     getSettings: () => {

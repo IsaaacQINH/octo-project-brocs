@@ -1,20 +1,35 @@
-import { useState } from "react";
+import { forwardRef, memo, useImperativeHandle, useState } from "react";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
-const TeamSettings = ({side}) => {
+const TeamSettings = forwardRef(({side}, _ref) => {
   const [team, setTeam] = useState({
     id: "",
     name: "",
     wins: 0
   });
 
+  const handleNameChange = (e) => {
+    e.preventDefault();
+    setTeam({ ...team, name: e.target.value });
+  }
+
   const handleWinsChange = (e) => {
     e.preventDefault();
     setTeam({...team, wins: e.target.value});
-  }
+  };
+
+  useImperativeHandle(_ref, () => ({
+    getTeamData: () => {
+      return team;
+    },
+    setTeamData: (value) => {
+      setTeam(value);
+    }
+    }));
 
   return (
     <>
-      <TextField fullWidth size="small" variant="outlined" label={"Team " + side} />
+      <TextField fullWidth size="small" variant="outlined" label={"Team " + side} value={team.name} onChange={handleNameChange}/>
       <FormControl fullWidth>
         <InputLabel sx={{mt: 2}} size="small" id={side + "-wins-select-label"}>Wins</InputLabel>
         <Select
@@ -37,9 +52,9 @@ const TeamSettings = ({side}) => {
         </Select>
       </FormControl>
     </>
-)
-};
+  );
+});
 
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+TeamSettings.displayName = `TeamSettingsComponent`;
 
-export default TeamSettings;
+export default memo(TeamSettings);

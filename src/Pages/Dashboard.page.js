@@ -25,6 +25,12 @@ const ResponsiveDrawer = (props) => {
 
   useEffect(() => {
     const getProjects = async () => {
+
+      if (!user) {
+        setProject([]);
+        return -2;
+      }
+
       const fetch = await supabase
         .from('user')
         .select('projects')
@@ -40,13 +46,22 @@ const ResponsiveDrawer = (props) => {
         .in('id', fetch.data.projects);
 
       if (!data) {
-        return setProjects([]);
+        setProjects([]);
+        return -2;
       }
 
       setProjects(data);
     }
 
-    getProjects().then().catch();
+    try {
+      const code = getProjects();
+      if (code === -2) {
+        console.error("Couldn't load projects!");
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
   }, [user]);
 
   const drawer = drawerComponent;
