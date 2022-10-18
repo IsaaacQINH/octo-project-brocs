@@ -2,8 +2,8 @@
   "name": "project-brocs",
   "version": "0.1",
   "description": "A tool to betterify Rocket League streams",
-  "main": "src/App.js",
   "scripts": {
+    "build": "parcel build src/index.html",
     "dev": "parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
