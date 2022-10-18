@@ -27,7 +27,7 @@ const ResponsiveDrawer = (props) => {
     const getProjects = async () => {
 
       if (!user) {
-        setProject([]);
+        setProject("");
         return -2;
       }
 

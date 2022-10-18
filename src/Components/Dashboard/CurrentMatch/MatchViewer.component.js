@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 import { useEffect, useRef } from "react";
 import { supabase } from "../../../Helper/supabaseClient";
 
-const MatchViewer = ({matchId}) => {
+const MatchViewer = ({matchId, handleUpdateTrigger}) => {
   const generalSettingsRef = useRef();
   const blueSideRef = useRef();
   const orangeSideRef = useRef();
@@ -24,7 +24,8 @@ const MatchViewer = ({matchId}) => {
       generalSettingsRef.current?.setSettings({
         name: data.name,
         format: data.format,
-        date: data.gamedate
+        date: data.gamedate,
+        metadata: data.game_metadata
       });
 
       blueSideRef.current?.setTeamData({
@@ -47,9 +48,36 @@ const MatchViewer = ({matchId}) => {
     getMatchData(matchId).then().catch();
   }, [matchId]);
 
-  const handleUpdate = () => {
-    //const general = generalSettingsRef.current?.getSettings();
-    //console.log(blueSideRef.current?.getTeamData());
+  const handleUpdate = async () => {
+    const general = generalSettingsRef.current?.getSettings();
+    const blueSide = blueSideRef.current?.getTeamData();
+    const orangeSide = orangeSideRef.current?.getTeamData();
+
+    try {
+      const { error } = await supabase
+        .from('match')
+        .update({
+          name: general.name,
+          gamedate: general.date,
+          format: general.format,
+          game_metadata: general.metadata,
+          blue_name: blueSide.name,
+          blue_wins: blueSide.wins,
+          blue_metadata: blueSide.metadata,
+          orange_name: orangeSide.name,
+          orange_wins: orangeSide.wins,
+          orange_metadata: orangeSide.metadata
+        })
+        .eq('id', matchId)
+        .single();
+      handleUpdateTrigger();
+
+      if (error) {
+        console.error(error);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (

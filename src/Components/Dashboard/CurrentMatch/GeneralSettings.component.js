@@ -8,7 +8,8 @@ const GeneralSettings = forwardRef((props, _ref) => {
   const [match, setMatch] = useState({
     name: "",
     format: "Bo3",
-    date: new Date()
+    date: new Date(),
+    metadata: {}
   });
 
   const handleDateChange = (newDate) => {

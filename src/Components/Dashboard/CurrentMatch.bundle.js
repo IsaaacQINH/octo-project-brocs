@@ -10,13 +10,15 @@ import { supabase } from "../../Helper/supabaseClient";
 
 const CurrentMatch = () => {
   const project = useOutletContext();
+  const [updateTrigger, setUpdateTrigger] = useState(false);
   const [matches, setMatches] = useState([]);
   const [selected, setSelected] = useState(null);
 
-  useEffect(() => {
-    const getMatches = async () => {
+  useEffect(async () => {
+    const memSelected = selected;
+    const getMatches = async (memS) => {
       if (project === "") {
-        return setMatches([]);
+        return [];
       }
 
       const {data} = await supabase
@@ -25,18 +27,32 @@ const CurrentMatch = () => {
         .eq('project_id', project);
 
       if (!data) {
-        return setMatches([]);
+        return [];
       }
 
-      setMatches(data);
+      if (data.find(m => m.id === memS)) {
+        setSelected(memS);
+      } else {
+        setSelected(null);
+      }
+
+      return data;
     };
 
-    getMatches().then().catch();
-    setSelected(null);
-  }, [project]);
+    try {
+      const fetchedMatches = await getMatches(memSelected);
+      setMatches(fetchedMatches);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [project, updateTrigger]);
 
   const handleUpdateSelectedMatch = (id) => {
     setSelected(id);
+  }
+
+  const handleUpdateTrigger = () => {
+    setUpdateTrigger(!updateTrigger);
   }
 
   return (
@@ -47,7 +63,7 @@ const CurrentMatch = () => {
           <MatchList matches={matches} handleUpdate={handleUpdateSelectedMatch}/>
         </Grid>
         <Grid item xs={8} md={9}>
-          <MatchViewer matchId={selected}/>
+          <MatchViewer matchId={selected} handleUpdateTrigger={handleUpdateTrigger}/>
         </Grid>
       </Grid>
     </Box>

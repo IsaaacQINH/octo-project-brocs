@@ -3,9 +3,9 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/mater
 
 const TeamSettings = forwardRef(({side}, _ref) => {
   const [team, setTeam] = useState({
-    id: "",
     name: "",
-    wins: 0
+    wins: 0,
+    metadata: {}
   });
 
   const handleNameChange = (e) => {
