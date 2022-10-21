@@ -13,6 +13,7 @@ import Overview from "./Components/Dashboard/Overview.bundle";
 import Login from "./Components/Website/Login.bundle";
 import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
+import OverlayComponent from "./Components/Overlay/Overlay.component";
 
 const darkMode = createTheme({
   palette: {
@@ -37,7 +38,10 @@ const App = () => {
               <Route path="" element={<Home />} />
               <Route path="about" element={<About />} />
             </Route>
-            <Route path="overlay" element={<OverlayPage />} />
+            <Route path="overlay" element={<OverlayPage />}>
+              <Route path=":project" element={<OverlayComponent />} />
+              <Route path=":project/:match" element={<OverlayComponent />} />
+            </Route>
             <Route path="login" element={<Login />} />
             <Route path="logout" element={<About />} />
           </Routes>

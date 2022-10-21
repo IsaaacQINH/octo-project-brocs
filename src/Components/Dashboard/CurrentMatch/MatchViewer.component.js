@@ -1,19 +1,41 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Fab, Grid, Paper } from "@mui/material";
+import { Fab, Grid, Tooltip } from "@mui/material";
 import TeamSettings from "./TeamSettings.component";
 import GeneralSettings from "./GeneralSettings.component";
-import { Add, Save, Update } from "@mui/icons-material";
+import { Archive, DesktopMac, Save, Update } from "@mui/icons-material";
 import Divider from "@mui/material/Divider";
 import { useEffect, useRef } from "react";
 import { supabase } from "../../../Helper/supabaseClient";
 
-const MatchViewer = ({matchId, handleUpdateTrigger}) => {
+const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
   const generalSettingsRef = useRef();
   const blueSideRef = useRef();
   const orangeSideRef = useRef();
 
   useEffect(async () => {
+    if (matchId === "new") {
+      generalSettingsRef.current?.setSettings({
+        name: "",
+        format: "Bo3",
+        date: new Date(),
+        metadata: {}
+      });
+
+      blueSideRef.current?.setTeamData({
+        name: "",
+        wins: 0,
+        metadata: {}
+      });
+
+      orangeSideRef.current?.setTeamData({
+        name: "",
+        wins: 0,
+        metadata: {}
+      });
+      return 0;
+    }
+
     const getMatchData = async (id) => {
       const {data} = await supabase
         .from('match')
@@ -80,10 +102,68 @@ const MatchViewer = ({matchId, handleUpdateTrigger}) => {
     }
   }
 
+  const handleInsert = async () => {
+    const general = generalSettingsRef.current?.getSettings();
+    const blueSide = blueSideRef.current?.getTeamData();
+    const orangeSide = orangeSideRef.current?.getTeamData();
+
+    try {
+      const { error } = await supabase
+        .from('match')
+        .insert({
+          name: general.name,
+          gamedate: general.date,
+          format: general.format,
+          game_metadata: general.metadata,
+          blue_name: blueSide.name,
+          blue_wins: blueSide.wins,
+          blue_metadata: blueSide.metadata,
+          orange_name: orangeSide.name,
+          orange_wins: orangeSide.wins,
+          orange_metadata: orangeSide.metadata,
+          project_id: projectId
+        });
+      handleUpdateTrigger();
+
+      if (error) {
+        console.error(error);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  const handleArchive = async () => {
+    try {
+      const { error } = await supabase
+        .from('match')
+        .update({
+          deleted: true
+        })
+        .eq('id', matchId)
+        .single();
+      handleUpdateTrigger();
+
+      if (error) {
+        console.error(error);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  const handleOverlayUrl = async () => {
+    if (!matchId) {
+      return 0;
+    }
+
+    await navigator.clipboard.writeText(`http://localhost:1234/overlay/${projectId}/${matchId}`);
+  }
+
   return (
     matchId ?
-      <Box sx={{ pl: 1, mr: 1, height: 'calc(100vh - 60px)', borderLeft: '1px solid rgba(0,0,0,0.2)'}}>
-        <Typography variant="h5">Edit Match</Typography>
+      <Box sx={{ pl: 1, mr: 1, height: "calc(100vh - 60px)", overflow: "auto"}}>
+        <Typography sx={{mt: 1}} variant="h5">Edit Match</Typography>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <GeneralSettings ref={generalSettingsRef}/>
@@ -101,24 +181,55 @@ const MatchViewer = ({matchId, handleUpdateTrigger}) => {
             <Typography sx={{mt:1}}>Replays</Typography>
           </Grid>
         </Grid>
-        <Fab sx={{position: 'fixed', bottom: 15, right: 250}} size="small" variant="circular" color="success" aria-label="new">
-          <Add />
-        </Fab>
-        <Fab sx={{position: 'fixed', bottom: 15, right: 140}} size="medium" variant="extended" color="primary" aria-label="save">
-          <Save sx={{mr: 1}} />
-          Save
-        </Fab>
-        <Fab
-          sx={{position: 'fixed', bottom: 15, right: 15}}
-          size="medium"
-          variant="extended"
-          color="primary"
-          aria-label="update"
-          onClick={handleUpdate}>
-          <Update sx={{mr: 1}} />
-          Update
-        </Fab>
-      </Box> : <Box ><Paper></Paper></Box>
+        {matchId === "new" ?
+          <Fab
+            sx={{position: 'fixed', bottom: 15, right: 15}}
+            size="medium"
+            variant="extended"
+            color="primary"
+            aria-label="save"
+            onClick={handleInsert}
+          >
+            <Save sx={{mr: 1}} />
+            Save
+          </Fab> :
+          <Box sx={{position: 'fixed', bottom: 15, right: 15}}>
+            <Fab
+              sx={{mr: 1}}
+              size="medium"
+              variant="extended"
+              color="success"
+              aria-label="overlay-url"
+              onClick={handleOverlayUrl}
+            >
+              <DesktopMac sx={{mr: 1}} />
+              Copy Overlay URL
+            </Fab>
+            <Fab
+              sx={{mr: 1}}
+              size="medium"
+              variant="extended"
+              color="primary"
+              aria-label="update"
+              onClick={handleUpdate}
+            >
+              <Update sx={{mr: 1}} />
+              Update
+            </Fab>
+            <Tooltip title="Archive">
+              <Fab
+                size="medium"
+                variant="circular"
+                color="warning"
+                aria-label="archive"
+                onClick={handleArchive}
+              >
+                <Archive />
+              </Fab>
+            </Tooltip>
+          </Box>
+        }
+      </Box> : <Box></Box>
   );
 };
 

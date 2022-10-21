@@ -24,7 +24,9 @@ const CurrentMatch = () => {
       const {data} = await supabase
         .from('match')
         .select('id, name')
-        .eq('project_id', project);
+        .order('gamedate', {ascending: true})
+        .eq('project_id', project)
+        .eq('deleted', false);
 
       if (!data) {
         return [];
@@ -41,6 +43,11 @@ const CurrentMatch = () => {
 
     try {
       const fetchedMatches = await getMatches(memSelected);
+
+      if (project) {
+        fetchedMatches.push({id: "new", name: "Neu erstellen..."});
+      }
+
       setMatches(fetchedMatches);
     } catch (e) {
       console.error(e);
@@ -63,7 +70,7 @@ const CurrentMatch = () => {
           <MatchList matches={matches} handleUpdate={handleUpdateSelectedMatch}/>
         </Grid>
         <Grid item xs={8} md={9}>
-          <MatchViewer matchId={selected} handleUpdateTrigger={handleUpdateTrigger}/>
+          <MatchViewer matchId={selected} projectId={project} handleUpdateTrigger={handleUpdateTrigger}/>
         </Grid>
       </Grid>
     </Box>
