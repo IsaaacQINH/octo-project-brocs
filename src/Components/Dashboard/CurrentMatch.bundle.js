@@ -45,7 +45,7 @@ const CurrentMatch = () => {
       const fetchedMatches = await getMatches(memSelected);
 
       if (project) {
-        fetchedMatches.push({id: "new", name: "Neu erstellen..."});
+        fetchedMatches.push({id: "new", name: " + Add match"});
       }
 
       setMatches(fetchedMatches);
@@ -70,7 +70,7 @@ const CurrentMatch = () => {
           <MatchList matches={matches} handleUpdate={handleUpdateSelectedMatch}/>
         </Grid>
         <Grid item xs={8} md={9}>
-          <MatchViewer matchId={selected} projectId={project} handleUpdateTrigger={handleUpdateTrigger}/>
+          <MatchViewer matchId={selected} projectId={project} handleUpdateTrigger={handleUpdateTrigger} />
         </Grid>
       </Grid>
     </Box>

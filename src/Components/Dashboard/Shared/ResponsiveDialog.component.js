@@ -9,24 +9,12 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Box from "@mui/material/Box";
 
-const ResponsiveDialog = () => {
-  const [open, setOpen] = React.useState(false);
+const ResponsiveDialog = ({title, description, actionName, action, handleClose, open}) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <Box>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open responsive dialog
-      </Button>
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -34,20 +22,19 @@ const ResponsiveDialog = () => {
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {"Use Google's location service?"}
+          {title}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
+            {description}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>
-            Disagree
+          <Button color="error" onClick={action}>
+            {actionName}
           </Button>
-          <Button onClick={handleClose}>
-            Agree
+          <Button color="primary" onClick={handleClose}>
+            Cancel
           </Button>
         </DialogActions>
       </Dialog>

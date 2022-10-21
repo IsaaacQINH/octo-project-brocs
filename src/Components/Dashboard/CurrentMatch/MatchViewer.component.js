@@ -5,13 +5,17 @@ import TeamSettings from "./TeamSettings.component";
 import GeneralSettings from "./GeneralSettings.component";
 import { Archive, DesktopMac, Save, Update } from "@mui/icons-material";
 import Divider from "@mui/material/Divider";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "../../../Helper/supabaseClient";
+import ResponsiveDialog from "../Shared/ResponsiveDialog.component";
+import * as React from "react";
 
 const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
   const generalSettingsRef = useRef();
   const blueSideRef = useRef();
   const orangeSideRef = useRef();
+
+  const [open, setOpen] = useState(false);
 
   useEffect(async () => {
     if (matchId === "new") {
@@ -133,14 +137,39 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
     }
   }
 
-  const handleArchive = async () => {
+  const handleOverlayUrl = async () => {
+    if (!matchId) {
+      return 0;
+    }
+
+    await navigator.clipboard.writeText(`http://localhost:1234/overlay/${projectId}/${matchId}`);
+  }
+
+  const handleDialogClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpen(false);
+  };
+
+  const handleDialogConfirmation = async () => {
+    try {
+      await archiveMatch(matchId);
+      setOpen(false);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const archiveMatch = async (id) => {
     try {
       const { error } = await supabase
         .from('match')
         .update({
           deleted: true
         })
-        .eq('id', matchId)
+        .eq('id', id)
         .single();
       handleUpdateTrigger();
 
@@ -150,14 +179,6 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
     } catch (e) {
       console.error(e);
     }
-  }
-
-  const handleOverlayUrl = async () => {
-    if (!matchId) {
-      return 0;
-    }
-
-    await navigator.clipboard.writeText(`http://localhost:1234/overlay/${projectId}/${matchId}`);
   }
 
   return (
@@ -222,11 +243,19 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
                 variant="circular"
                 color="warning"
                 aria-label="archive"
-                onClick={handleArchive}
+                onClick={handleDialogClickOpen}
               >
                 <Archive />
               </Fab>
             </Tooltip>
+            <ResponsiveDialog
+              title={<>Archive <b>{generalSettingsRef.current?.getSettings().name}</b>?</>}
+              description={<>Are you sure you want to archive this match?<br />Archived matches will not appear in this list!</>}
+              open={open}
+              actionName="Archive"
+              action={handleDialogConfirmation}
+              handleClose={handleDialogClose}
+            />
           </Box>
         }
       </Box> : <Box></Box>
