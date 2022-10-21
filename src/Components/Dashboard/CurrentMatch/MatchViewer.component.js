@@ -258,7 +258,10 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
             />
           </Box>
         }
-      </Box> : <Box></Box>
+      </Box> :
+      <Box sx={{width: '100%', textAlign: 'center', mt: 10}}>
+        Select a match...
+      </Box>
   );
 };
 

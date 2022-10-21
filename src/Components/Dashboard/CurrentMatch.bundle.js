@@ -63,6 +63,7 @@ const CurrentMatch = () => {
   }
 
   return (
+    project ?
     <Box>
       <Toolbar />
       <Grid container>
@@ -73,6 +74,10 @@ const CurrentMatch = () => {
           <MatchViewer matchId={selected} projectId={project} handleUpdateTrigger={handleUpdateTrigger} />
         </Grid>
       </Grid>
+    </Box> :
+    <Box sx={{width: '100%', textAlign: 'center', mt: 10}}>
+      <Toolbar />
+      Select a project...
     </Box>
   );
 };
