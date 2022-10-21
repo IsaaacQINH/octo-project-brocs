@@ -25,7 +25,11 @@ const darkMode = createTheme({
 const App = () => {
   const user = supabase.auth.user();
 
-  if (localStorage.getItem('username') !== user.user_metadata.full_name) {
+  if (!user) {
+    localStorage.removeItem('username')
+  }
+
+  if (user && localStorage.getItem('username') !== user.user_metadata.full_name) {
     localStorage.setItem('username', user.user_metadata.full_name);
   }
 
