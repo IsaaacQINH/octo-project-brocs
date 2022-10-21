@@ -14,6 +14,7 @@ import Login from "./Components/Website/Login.bundle";
 import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import OverlayComponent from "./Components/Overlay/Overlay.component";
+import { supabase } from "./Helper/supabaseClient";
 
 const darkMode = createTheme({
   palette: {
@@ -22,6 +23,12 @@ const darkMode = createTheme({
 });
 
 const App = () => {
+  const user = supabase.auth.user();
+
+  if (localStorage.getItem('username') !== user.user_metadata.full_name) {
+    localStorage.setItem('username', user.user_metadata.full_name);
+  }
+
   return (
     <StrictMode>
       <ThemeProvider theme={darkMode}>

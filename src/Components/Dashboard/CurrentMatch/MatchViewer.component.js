@@ -92,7 +92,8 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
           blue_metadata: blueSide.metadata,
           orange_name: orangeSide.name,
           orange_wins: orangeSide.wins,
-          orange_metadata: orangeSide.metadata
+          orange_metadata: orangeSide.metadata,
+          lastUpdateBy: localStorage.getItem('username')
         })
         .eq('id', matchId)
         .single();
@@ -125,7 +126,8 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
           orange_name: orangeSide.name,
           orange_wins: orangeSide.wins,
           orange_metadata: orangeSide.metadata,
-          project_id: projectId
+          project_id: projectId,
+          lastUpdateBy: localStorage.getItem('username')
         });
       handleUpdateTrigger();
 
@@ -167,7 +169,8 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
       const { error } = await supabase
         .from('match')
         .update({
-          deleted: true
+          deleted: true,
+          lastUpdateBy: localStorage.getItem('username')
         })
         .eq('id', id)
         .single();
