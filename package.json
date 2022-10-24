@@ -2,6 +2,7 @@
   "name": "project-brocs",
   "version": "0.1",
   "description": "A tool to betterify Rocket League streams",
+  "homepage": ".",
   "scripts": {
     "build": "parcel build src/index.html",
     "dev": "parcel src/index.html",

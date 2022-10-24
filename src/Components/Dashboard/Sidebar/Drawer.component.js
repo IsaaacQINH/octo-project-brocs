@@ -8,6 +8,8 @@ import * as React from "react";
 import { Dashboard, ListAlt, Monitor, Storage, Workspaces } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
+// Notice: Needs Cache clear apparently... whysoever
+
 const drawerContent = [["Overview", "CurrentMatch", "Standings", "Database"], ["WIP"]];
 
 const drawerIcons = [
@@ -15,9 +17,11 @@ const drawerIcons = [
     <Dashboard key="overview" />,
     <Monitor key="current" />,
     <ListAlt key="standings" />,
-    <Storage key="database" />,
+    <Storage key="database" />
   ],
-  [<Workspaces key="WIP" />],
+  [
+    <Workspaces key="WIP" />,
+  ],
 ];
 
 const drawerRouter = [["", "current", "standings", "database"], [""]];
