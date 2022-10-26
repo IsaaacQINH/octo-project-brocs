@@ -4,6 +4,7 @@ import { ListItem } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { grey } from "@mui/material/colors";
+import moment from "moment/moment";
 
 const MatchList = (({ matches, handleUpdate }) => {
   const matchList = matches.map((value, index) =>
@@ -13,6 +14,7 @@ const MatchList = (({ matches, handleUpdate }) => {
           <ListItemText
             sx={{color: value.id === "new" ? grey.A400 : "#000000"}}
             primary={value.name}
+            secondary={value.gamedate ? moment(value.gamedate).format("DD/MM/YYYY HH:mm"): ""}
           />
         </ListItemButton>
       </ListItem>

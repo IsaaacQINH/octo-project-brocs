@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Fab, Grid, Tooltip } from "@mui/material";
+import { Alert, Fab, Grid, Snackbar, Stack, Tooltip } from "@mui/material";
 import TeamSettings from "./TeamSettings.component";
 import GeneralSettings from "./GeneralSettings.component";
 import { Archive, DesktopMac, Save, Update } from "@mui/icons-material";
@@ -16,6 +16,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
   const orangeSideRef = useRef();
 
   const [open, setOpen] = useState(false);
+  const [snackbaropen, setsbopen] = useState(false);
 
   useEffect(async () => {
     if (matchId === "new") {
@@ -144,6 +145,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
       return 0;
     }
 
+    setsbopen(true);
     await navigator.clipboard.writeText(`http://localhost:1234/overlay/${projectId}/${matchId}`);
   }
 
@@ -163,6 +165,10 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
       console.error(e);
     }
   };
+
+  const handleSBClose = () => {
+    setsbopen(false);
+  }
 
   const archiveMatch = async (id) => {
     try {
@@ -187,12 +193,12 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
   return (
     matchId ?
       <Box sx={{ pl: 1, mr: 1, height: "calc(100vh - 60px)", overflow: "auto"}}>
-        <Typography sx={{mt: 1}} variant="h5">Edit Match</Typography>
+        <Typography sx={{fontSize: "h6.fontsize", fontWeight: 900, textTransform: "uppercase", letterSpacing: 1, mt: 1}}>Edit Match</Typography>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <GeneralSettings ref={generalSettingsRef}/>
             <Divider sx={{mt:3}}/>
-            <Typography sx={{mt:1}}>Teams</Typography>
+            <Typography variant="overline" sx={{fontWeight: 900, mt: 1}}>Teams</Typography>
           </Grid>
           <Grid item xs={12} md={6}>
             <TeamSettings side="blue" ref={blueSideRef}/>
@@ -202,7 +208,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
           </Grid>
           <Grid item xs={12}>
             <Divider sx={{mt:3}}/>
-            <Typography sx={{mt:1}}>Replays</Typography>
+            <Typography variant="overline" sx={{fontWeight: 900, mt: 1}}>Replays</Typography>
           </Grid>
         </Grid>
         {matchId === "new" ?
@@ -259,6 +265,13 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
               action={handleDialogConfirmation}
               handleClose={handleDialogClose}
             />
+            <Stack spacing={2} sx={{ width: '100%'}}>
+              <Snackbar anchorOrigin={{vertical: "bottom",horizontal: "center"}} onClose={handleSBClose} open={snackbaropen} autoHideDuration={6000}>
+                <Alert onClose={handleSBClose} severity="info" sx={{ width: '100%' }}>
+                  Copied Overlay URL!
+                </Alert>
+              </Snackbar>
+            </Stack>
           </Box>
         }
       </Box> :

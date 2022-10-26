@@ -23,7 +23,7 @@ const CurrentMatch = () => {
 
       const {data} = await supabase
         .from('match')
-        .select('id, name')
+        .select('id, name, gamedate')
         .order('gamedate', {ascending: true})
         .eq('project_id', project)
         .eq('deleted', false);

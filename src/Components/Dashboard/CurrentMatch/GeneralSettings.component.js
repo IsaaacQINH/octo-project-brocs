@@ -33,8 +33,9 @@ const GeneralSettings = forwardRef((props, _ref) => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="de">
-      <Typography>General</Typography>
+      <Typography variant="overline" sx={{fontWeight: 900}}>General</Typography>
       <TextField
+        sx={{mt: 1}}
         fullWidth
         size="small"
         variant="outlined"

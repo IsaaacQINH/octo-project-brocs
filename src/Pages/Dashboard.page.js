@@ -1,29 +1,34 @@
+import { Navigate, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import Drawer from "@mui/material/Drawer/";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import { Navigate, Outlet } from "react-router-dom";
-import drawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
-import { useEffect, useState } from "react";
-import Account from "../Components/Dashboard/Sidebar/Account.component";
 import Divider from "@mui/material/Divider";
-import * as React from "react";
+import drawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
+import Account from "../Components/Dashboard/Sidebar/Account.component";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import { supabase } from "../Helper/supabaseClient";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Avatar } from "@mui/material";
+import { Search } from "@mui/icons-material";
+import Typography from "@mui/material/Typography";
 
-const drawerWidth = 240;
+const drawerWidth = 225;
 
-const ResponsiveDrawer = (props) => {
-  const { window } = props;
-  const user = supabase.auth.user();
+const ResponsiveDrawer = ({ wdw }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [projects, setProjects] = useState(null);
   const [project, setProject] = useState("");
 
-  useEffect(() => {
+  const user = supabase.auth.user();
+
+  useEffect(async () => {
     const getProjects = async () => {
 
       if (!user) {
@@ -54,7 +59,7 @@ const ResponsiveDrawer = (props) => {
     }
 
     try {
-      const code = getProjects();
+      const code = await getProjects();
       if (code === -2) {
         console.error("Couldn't load projects!");
       }
@@ -62,6 +67,7 @@ const ResponsiveDrawer = (props) => {
     catch (e) {
       console.error(e);
     }
+
   }, [user]);
 
   const drawer = drawerComponent;
@@ -79,7 +85,7 @@ const ResponsiveDrawer = (props) => {
   }
 
   const container =
-    window !== undefined ? () => window().document.body : undefined;
+    wdw !== undefined ? () => wdw().document.body : undefined;
 
   return (user ?
     <Box sx={{ display: "flex" }}>
@@ -89,8 +95,8 @@ const ResponsiveDrawer = (props) => {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-
         }}
+        color="transparent"
       >
         <Toolbar>
           <IconButton
@@ -102,12 +108,13 @@ const ResponsiveDrawer = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <FormControl sx={{m: 1, minWidth: 300}}>
+          <FormControl sx={{m: 1, width: {xs: 225, sm: 300 }}}>
             <InputLabel id="project-select-label" size="small">Project</InputLabel>
             <Select
               size="small"
               variant="outlined"
               labelId="project-select-label"
+              label="project"
               value={project}
               onChange={handleProjectSelect}
             >
@@ -116,12 +123,23 @@ const ResponsiveDrawer = (props) => {
               {projectList}
             </Select>
           </FormControl>
+          <Box sx={{width: { xs: 250, sm: `calc(100% - 125px)` }}}>
+            <Avatar sx={{ float: "right", display: {sm: "none"}}} alt={user ? user.user_metadata.full_name : "name"} src={user ? user.user_metadata.avatar_url : "null"} />
+            <IconButton
+              sx={{mr: {xs: 1, sm: 0}, float: "right", borderRadius: 5}}
+              color="inherit"
+              aria-label="open drawer"
+            >
+              <Search />
+              <Typography sx={{display: {xs: "none", sm: "block"}}} variant="h6">Search</Typography>
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
+        aria-label="whatever"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
