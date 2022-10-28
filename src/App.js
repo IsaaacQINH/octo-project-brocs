@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import OverlayComponent from "./Components/Overlay/Overlay.component";
 import { supabase } from "./Helper/supabaseClient";
+import LayoutEditor from "./Components/Dashboard/Layout.bundle";
+import SettingsManager from "./Components/Dashboard/Settings.bundle";
 
 const darkMode = createTheme({
   palette: {
@@ -44,6 +46,8 @@ const App = () => {
               <Route path="current" element={<CurrentMatch />} />
               <Route path="standings" element={<Standings />} />
               <Route path="database" element={<DatabaseEditor />} />
+              <Route path="layout" element={<LayoutEditor />} />
+              <Route path="settings" element={<SettingsManager />} />
             </Route>
             <Route path="/" element={<WebsitePage />}>
               <Route path="" element={<Home />} />

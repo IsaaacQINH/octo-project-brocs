@@ -8,7 +8,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
-import drawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
 import Account from "../Components/Dashboard/Sidebar/Account.component";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -16,10 +15,23 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { supabase } from "../Helper/supabaseClient";
 import { Avatar } from "@mui/material";
-import { Search } from "@mui/icons-material";
-import Typography from "@mui/material/Typography";
+import { Dashboard, ListAlt, Monitor, Settings, Storage, Workspaces } from "@mui/icons-material";
+import DrawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
+import * as React from "react";
+import SearchButton from "../Components/Dashboard/Appbar/SearchButton.component";
 
 const drawerWidth = 225;
+
+const links = [
+  {route: '', name: 'Overview', icon: <Dashboard />},
+  {name: 'divider'},
+  {route: 'current', name: 'Current Match', icon: <Monitor />},
+  {route: 'standings', name: 'Standings', icon: <ListAlt />},
+  {route: 'database', name: 'Database', icon: <Storage />},
+  {name: 'divider'},
+  {route: 'layout', name: 'Layout', icon: <Workspaces />},
+  {route: 'settings', name: 'Settings', icon: <Settings />}
+];
 
 const ResponsiveDrawer = ({ wdw }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -70,7 +82,6 @@ const ResponsiveDrawer = ({ wdw }) => {
 
   }, [user]);
 
-  const drawer = drawerComponent;
   const projectList = projects ? projects.map((values, index) =>
     <MenuItem key={index} value={values.id}>{values.name}</MenuItem>
   ) : [];
@@ -125,14 +136,7 @@ const ResponsiveDrawer = ({ wdw }) => {
           </FormControl>
           <Box sx={{width: { xs: 250, sm: `calc(100% - 125px)` }}}>
             <Avatar sx={{ float: "right", display: {sm: "none"}}} alt={user ? user.user_metadata.full_name : "name"} src={user ? user.user_metadata.avatar_url : "null"} />
-            <IconButton
-              sx={{mr: {xs: 1, sm: 0}, float: "right", borderRadius: 5}}
-              color="inherit"
-              aria-label="open drawer"
-            >
-              <Search />
-              <Typography sx={{display: {xs: "none", sm: "block"}}} variant="h6">Search</Typography>
-            </IconButton>
+            <SearchButton />
           </Box>
         </Toolbar>
       </AppBar>
@@ -158,7 +162,7 @@ const ResponsiveDrawer = ({ wdw }) => {
             },
           }}
         >
-          {drawer}
+          <DrawerComponent links={links}/>
         </Drawer>
         <Drawer
           variant="permanent"
@@ -173,7 +177,7 @@ const ResponsiveDrawer = ({ wdw }) => {
         >
           <Account user={user}/>
           <Divider />
-          {drawer}
+          <DrawerComponent links={links} />
         </Drawer>
       </Box>
       <Box

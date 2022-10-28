@@ -16,7 +16,8 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
   const orangeSideRef = useRef();
 
   const [open, setOpen] = useState(false);
-  const [snackbaropen, setsbopen] = useState(false);
+  const [snackbarinfoopen, setsbiopen] = useState(false);
+  const [snackbarsuccessopen, setsbsopen] = useState(false);
 
   useEffect(async () => {
     if (matchId === "new") {
@@ -99,6 +100,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
         .eq('id', matchId)
         .single();
       handleUpdateTrigger();
+      setsbsopen(true);
 
       if (error) {
         console.error(error);
@@ -145,7 +147,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
       return 0;
     }
 
-    setsbopen(true);
+    setsbiopen(true);
     await navigator.clipboard.writeText(`http://localhost:1234/overlay/${projectId}/${matchId}`);
   }
 
@@ -167,7 +169,8 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
   };
 
   const handleSBClose = () => {
-    setsbopen(false);
+    setsbsopen(false);
+    setsbiopen(false);
   }
 
   const archiveMatch = async (id) => {
@@ -266,9 +269,14 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
               handleClose={handleDialogClose}
             />
             <Stack spacing={2} sx={{ width: '100%'}}>
-              <Snackbar anchorOrigin={{vertical: "bottom",horizontal: "center"}} onClose={handleSBClose} open={snackbaropen} autoHideDuration={6000}>
+              <Snackbar anchorOrigin={{vertical: "bottom",horizontal: "center"}} onClose={handleSBClose} open={snackbarinfoopen} autoHideDuration={6000}>
                 <Alert onClose={handleSBClose} severity="info" sx={{ width: '100%' }}>
                   Copied Overlay URL!
+                </Alert>
+              </Snackbar>
+              <Snackbar anchorOrigin={{vertical: "bottom",horizontal: "center"}} onClose={handleSBClose} open={snackbarsuccessopen} autoHideDuration={6000}>
+                <Alert onClose={handleSBClose} severity="success" sx={{ width: '100%' }}>
+                  Updated Match
                 </Alert>
               </Snackbar>
             </Stack>

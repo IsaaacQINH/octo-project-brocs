@@ -9,7 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Box from "@mui/material/Box";
 
-const ResponsiveDialog = ({title, description, actionName, action, handleClose, open}) => {
+const ResponsiveDialog = ({title, description, actionName, action, handleClose, open, color}) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -30,7 +30,7 @@ const ResponsiveDialog = ({title, description, actionName, action, handleClose, 
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button color="error" onClick={action}>
+          <Button color={color} onClick={action}>
             {actionName}
           </Button>
           <Button color="primary" onClick={handleClose}>

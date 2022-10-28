@@ -10,6 +10,8 @@ import { supabase } from "../../Helper/supabaseClient";
 
 const CurrentMatch = () => {
   const project = useOutletContext();
+  const [loading, setLoading] = useState(false);
+  const [skeleton, setSkeleton] = useState([]);
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const [matches, setMatches] = useState([]);
   const [selected, setSelected] = useState(null);
@@ -19,6 +21,17 @@ const CurrentMatch = () => {
     const getMatches = async (memS) => {
       if (project === "") {
         return [];
+      }
+
+      const { count } = await supabase
+        .from('match')
+        .select('id', {count: 'exact'})
+        .eq('project_id', project)
+        .eq('deleted', false);
+
+      if (count) {
+        setSkeleton(new Array(count).fill(1));
+        setLoading(true);
       }
 
       const {data} = await supabase
@@ -49,6 +62,7 @@ const CurrentMatch = () => {
       }
 
       setMatches(fetchedMatches);
+      setLoading(false);
     } catch (e) {
       console.error(e);
     }
@@ -67,10 +81,10 @@ const CurrentMatch = () => {
     <Box>
       <Toolbar />
       <Grid container>
-        <Grid item xs={4} md={3}>
-          <MatchList matches={matches} handleUpdate={handleUpdateSelectedMatch}/>
+        <Grid item xs={5} md={4}>
+          <MatchList loading={loading} matches={loading ? skeleton : matches} selected={selected} handleUpdate={handleUpdateSelectedMatch}/>
         </Grid>
-        <Grid item xs={8} md={9}>
+        <Grid item xs={7} md={8}>
           <MatchViewer matchId={selected} projectId={project} handleUpdateTrigger={handleUpdateTrigger} />
         </Grid>
       </Grid>
