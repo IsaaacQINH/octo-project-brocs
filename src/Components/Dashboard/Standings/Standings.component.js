@@ -6,25 +6,49 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Box from "@mui/material/Box";
+import {useEffect, useState} from "react";
+import {supabase} from "../../../Helper/supabaseClient";
 
 function createData(pos, name, wins, losses, series, goals) {
   return { pos, name, wins, losses, series, goals };
 }
 
-const rows = [
-  createData('1', 'Test', 6, 2, '16-2', '+27'),
-  createData('2', 'Test', 6, 2, '16-2', '+27'),
-  createData('3', 'Test', 6, 2, '16-2', '+27'),
-  createData('4', 'Test', 6, 2, '16-2', '+27'),
-  createData('5', 'Test', 6, 2, '16-2', '+27'),
-  createData('6', 'Test', 6, 2, '16-2', '+27'),
-  createData('7', 'Test', 6, 2, '16-2', '+27'),
-  createData('8', 'Test', 6, 2, '16-2', '+27'),
-  createData('9', 'Test', 6, 2, '16-2', '+27'),
-  createData('10', 'Test', 6, 2, '16-2', '+27'),
-];
+const StandingsTable = ({project}) => {
+  const [rows, setRows] = useState([]);
 
-export default function StandingsTable() {
+  useEffect(async () => {
+    try {
+      if (!project) {
+        setRows([]);
+        return 0;
+      }
+
+      const {data} = await supabase
+          .from('team')
+          .select('name, match_wins, match_losses, series_wins, series_losses')
+          .eq('project_id', project)
+          .order('match_wins', {ascending: false});
+
+      if (!data) {
+        setRows([]);
+        return 0;
+      }
+
+      setRows(data.map((value, index) =>
+          createData(
+              index + 1,
+              value.name,
+              value.match_wins,
+              value.match_losses,
+              `${value.series_wins}-${value.series_losses}`,
+              'N/A'
+          )
+      ));
+    } catch (e) {
+      console.error(e)
+    }
+  }, [project]);
+
   return (
     <TableContainer component={Box}>
       <Table sx={{ minWidth: 650 }} aria-label="standings">
@@ -45,7 +69,7 @@ export default function StandingsTable() {
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell align="center">u</TableCell>
+              <TableCell align="center">•▲▼</TableCell>
               <TableCell align="left">{row.pos}</TableCell>
               <TableCell component="th" scope="row">
                 {row.name}
@@ -61,3 +85,5 @@ export default function StandingsTable() {
     </TableContainer>
   );
 }
+
+export default StandingsTable;
