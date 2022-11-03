@@ -28,7 +28,7 @@ const App = () => {
   const user = supabase.auth.user();
 
   if (!user) {
-    localStorage.removeItem('username')
+    localStorage.removeItem('username');
   }
 
   if (user && localStorage.getItem('username') !== user.user_metadata.full_name) {
