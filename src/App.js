@@ -49,7 +49,7 @@ const App = () => {
               <Route path="layout" element={<LayoutEditor />} />
               <Route path="settings" element={<SettingsManager />} />
             </Route>
-            <Route path="/" element={<WebsitePage />}>
+            <Route path="" element={<WebsitePage />}>
               <Route path="" element={<Home />} />
               <Route path="about" element={<About />} />
             </Route>

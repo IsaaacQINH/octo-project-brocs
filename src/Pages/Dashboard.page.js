@@ -40,6 +40,7 @@ const addField = {id: "new", name: "+ Add project"};
 
 const DashboardPage = ({ wdw }) => {
   const [openNewProject, setOpenNP] = useState(false);
+  const [loadingNewProject, setLoadingNP] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState("");
@@ -115,6 +116,7 @@ const DashboardPage = ({ wdw }) => {
       return setOpenNP(false);
     }
 
+    setLoadingNP(true);
     try {
       const existing = projects.map(p => p.id);
       existing.pop();
@@ -159,6 +161,7 @@ const DashboardPage = ({ wdw }) => {
     }
 
     setOpenNP(false);
+    setLoadingNP(false);
   }
 
   const handleProjectCancel = () => {
@@ -279,6 +282,7 @@ const DashboardPage = ({ wdw }) => {
         <Outlet context={project} />
       </Box>
       <ResponsiveDialog
+          loading={loadingNewProject}
           open={openNewProject}
           title="Create new Project"
           content={dialogContent}

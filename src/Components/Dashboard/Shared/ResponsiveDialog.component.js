@@ -8,8 +8,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Box from "@mui/material/Box";
+import {CircularProgress} from "@mui/material";
+import {green} from "@mui/material/colors";
 
-const ResponsiveDialog = ({title, content, actionName, action, handleClose, open, color}) => {
+const ResponsiveDialog = ({title, content, actionName, action, handleClose, open, color, loading}) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -34,13 +36,26 @@ const ResponsiveDialog = ({title, content, actionName, action, handleClose, open
           }
         </DialogContent>
         <DialogActions>
-          <Button color={color} onClick={action}>
+          <Button color={color} onClick={action} disabled={loading}>
             {actionName}
           </Button>
-          <Button color="primary" onClick={handleClose}>
+          <Button color="primary" onClick={handleClose} disabled={loading}>
             Cancel
           </Button>
         </DialogActions>
+        {loading && (
+            <CircularProgress
+                size={24}
+                sx={{
+                  color: green[500],
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }}
+            />
+        )}
       </Dialog>
     </Box>
   );
