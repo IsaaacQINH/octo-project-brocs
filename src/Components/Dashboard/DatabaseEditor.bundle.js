@@ -7,6 +7,9 @@ import { FormControl, InputLabel, MenuItem, Select, Skeleton } from "@mui/materi
 import { supabase } from "../../Helper/supabaseClient";
 import { useOutletContext } from "react-router-dom";
 import * as React from "react";
+import FormDialog from "./DatabaseEditor/FormDialog.component";
+import {Add} from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
 
 const getPlayer = async (project) => {
   const { data } = await supabase
@@ -32,6 +35,8 @@ const DatabaseEditor = () => {
   const [table, setTable] = useState('team');
   const [player, setPlayer] = useState([]);
   const [teams, setTeam] = useState([]);
+
+  const [openFormDialog, setOpenFD] = useState(false);
 
   useEffect(async () => {
     if (!project) {
@@ -76,9 +81,22 @@ const DatabaseEditor = () => {
                 <MenuItem value="player">Player</MenuItem>
               </Select>
             </FormControl>
+            <IconButton
+                aria-label="new"
+                sx={{mt: 2, background: '#4caf50', color: 'white', '&:hover': {background: '#6fbf72'}}}
+                onClick={() => setOpenFD(true)}
+            >
+              <Add />
+            </IconButton>
             {loading ? <Skeleton animation="pulse" sx={{m: 2, pb: 30}}/> :
                 table === 'team' ? <TeamTable teams={teams} /> : <PlayerTable player={player} />
             }
+            <FormDialog
+                type="New"
+                open={openFormDialog}
+                handleClose={() => setOpenFD(false)}
+                handleSubmit={() => setOpenFD(false)}
+            />
           </Box> :
           <Box sx={{width: '100%', textAlign: 'center', mt: 10}}>
             Select a project...

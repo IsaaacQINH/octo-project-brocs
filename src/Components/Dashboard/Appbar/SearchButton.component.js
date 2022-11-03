@@ -29,7 +29,7 @@ const SearchButton = () => {
       </IconButton>
       <ResponsiveDialog
       title={"Development Notice"}
-      description={"This is not an implemented Feature yet!"}
+      content={"This is not an implemented Feature yet!"}
       open={open}
       actionName="OK"
       color="info"

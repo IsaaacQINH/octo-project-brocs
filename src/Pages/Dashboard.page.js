@@ -14,11 +14,14 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { supabase } from "../Helper/supabaseClient";
-import { Avatar } from "@mui/material";
+import {Avatar, TextField} from "@mui/material";
 import { Dashboard, ListAlt, Monitor, Settings, Storage, Workspaces } from "@mui/icons-material";
 import DrawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
 import * as React from "react";
 import SearchButton from "../Components/Dashboard/Appbar/SearchButton.component";
+import ResponsiveDialog from "../Components/Dashboard/Shared/ResponsiveDialog.component";
+import DialogContentText from "@mui/material/DialogContentText";
+import {grey} from "@mui/material/colors";
 
 const drawerWidth = 225;
 
@@ -33,10 +36,14 @@ const links = [
   {route: 'settings', name: 'Settings', icon: <Settings />}
 ];
 
-const ResponsiveDrawer = ({ wdw }) => {
+const addField = {id: "new", name: "+ Add project"};
+
+const DashboardPage = ({ wdw }) => {
+  const [openNewProject, setOpenNP] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [projects, setProjects] = useState(null);
+  const [projects, setProjects] = useState([]);
   const [project, setProject] = useState("");
+  const [newProject, setNewProject] = useState("");
 
   const user = supabase.auth.user();
 
@@ -50,11 +57,16 @@ const ResponsiveDrawer = ({ wdw }) => {
 
       const fetch = await supabase
         .from('user')
-        .select('projects')
+        .select('full_name, projects, roles')
         .eq('id', user.id).single();
 
       if (!fetch.data) {
+        //new user
         return setProjects([]);
+      }
+
+      if (fetch.data.projects === null) {
+        return setProjects([addField]);
       }
 
       const {data} = await supabase
@@ -63,10 +75,11 @@ const ResponsiveDrawer = ({ wdw }) => {
         .in('id', fetch.data.projects);
 
       if (!data) {
-        setProjects([]);
+        setProjects([addField]);
         return -2;
       }
 
+      data.push(addField);
       setProjects(data);
     }
 
@@ -82,18 +95,95 @@ const ResponsiveDrawer = ({ wdw }) => {
 
   }, [user]);
 
-  const projectList = projects ? projects.map((values, index) =>
-    <MenuItem key={index} value={values.id}>{values.name}</MenuItem>
-  ) : [];
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const handleProjectSelect = (e) => {
     e.preventDefault();
+
+    if (e.target.value === "new") {
+      setOpenNP(true);
+      return setProject(prevState => prevState);
+    }
+
     setProject(e.target.value);
   }
+
+  const handleProjectCreation = async () => {
+    if (newProject === "") {
+      return setOpenNP(false);
+    }
+
+    try {
+      const existing = projects.map(p => p.id);
+      existing.pop();
+
+      const projectStorage = await supabase
+          .from('project_storage')
+          .insert({
+            name: newProject.toLowerCase().replaceAll(' ', '-'),
+            global: false,
+            visible: true,
+            type: 'team'
+          }).single();
+
+      const {data} = await supabase
+          .from('project')
+          .insert({
+            name: newProject,
+            storage_id: projectStorage.data.id,
+            storage_global_id: '83ae7887-f6ea-4bce-bf04-b8169ce9022a'
+          }).single();
+
+      existing.push(data.id);
+
+      const {error} = await supabase
+          .from('user')
+          .update({projects: existing})
+          .eq('id', user.id).single();
+
+      if (error) {
+        console.error(error);
+      }
+
+      setNewProject("");
+      setProjects(prevState => {
+        const pop = prevState.pop();
+        prevState.push(data);
+        prevState.push(pop);
+        return prevState;
+      });
+    } catch (e) {
+      console.error(e);
+    }
+
+    setOpenNP(false);
+  }
+
+  const handleProjectCancel = () => {
+    setOpenNP(false);
+  }
+
+  const projectList = projects ? projects.map((values, index) =>
+      <MenuItem key={index} value={values.id} sx={values.id === "new" ? {color: grey.A400}:{}}>{values.name}</MenuItem>
+  ) : [];
+
+  const dialogContent = <>
+    <DialogContentText sx={{mb: 1}}>
+      Add teams to project database.
+    </DialogContentText>
+    <TextField
+        id="name"
+        label="Name"
+        type="name"
+        size="small"
+        fullWidth
+        variant="outlined"
+        value={newProject}
+        onChange={(e) => setNewProject(e.target.value)}
+    />
+  </>;
 
   const container =
     wdw !== undefined ? () => wdw().document.body : undefined;
@@ -145,7 +235,6 @@ const ResponsiveDrawer = ({ wdw }) => {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="whatever"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
@@ -189,8 +278,17 @@ const ResponsiveDrawer = ({ wdw }) => {
       >
         <Outlet context={project} />
       </Box>
+      <ResponsiveDialog
+          open={openNewProject}
+          title="Create new Project"
+          content={dialogContent}
+          color="success"
+          actionName="Create"
+          action={handleProjectCreation}
+          handleClose={handleProjectCancel}
+      />
     </Box> : <Navigate to="/login" />
   );
 };
 
-export default ResponsiveDrawer;
+export default DashboardPage;

@@ -262,7 +262,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
             </Tooltip>
             <ResponsiveDialog
               title={<>Archive <b>{generalSettingsRef.current?.getSettings().name}</b>?</>}
-              description={<>Are you sure you want to archive this match?<br />Archived matches will not appear in this list!</>}
+              content={<>Are you sure you want to archive this match?<br />Archived matches will not appear in this list!</>}
               open={open}
               actionName="Archive"
               action={handleDialogConfirmation}
