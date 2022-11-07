@@ -56,7 +56,7 @@ const DatabaseEditor = () => {
 
   const handleTableSelection = async (e) => {
     e.preventDefault();
-    await setTable(e.target.value);
+    setTable(e.target.value);
   };
 
   return (
