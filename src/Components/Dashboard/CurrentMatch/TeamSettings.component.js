@@ -1,16 +1,16 @@
 import { forwardRef, memo, useImperativeHandle, useState } from "react";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
-const TeamSettings = forwardRef(({side}, _ref) => {
+const TeamSettings = forwardRef(({teams, side}, _ref) => {
   const [team, setTeam] = useState({
-    name: "",
+    id: "",
     wins: 0,
     metadata: {}
   });
 
   const handleNameChange = (e) => {
     e.preventDefault();
-    setTeam({ ...team, name: e.target.value });
+    setTeam({ ...team, id: e.target.value });
   }
 
   const handleWinsChange = (e) => {
@@ -25,11 +25,27 @@ const TeamSettings = forwardRef(({side}, _ref) => {
     setTeamData: (value) => {
       setTeam(value);
     }
-    }));
+  }));
+
+  const teamList = teams.map((value, index) => {
+    <MenuItem key={index} value={value.id}>value.name</MenuItem>
+  });
 
   return (
     <>
-      <TextField fullWidth size="small" variant="outlined" label={"Team " + side} value={team.name} onChange={handleNameChange}/>
+      <FormControl fullWidth>
+        <InputLabel size="small" id={side + "-team-select-label"}>Team</InputLabel>
+        <Select
+          size="small"
+          labelId={side + "-team-select-label"}
+          id={side + "-team-select"}
+          label="Team"
+          value={team.id}
+          onChange={handleNameChange}
+        >
+          {teamList}
+        </Select>
+      </FormControl>
       <FormControl fullWidth>
         <InputLabel sx={{mt: 2}} size="small" id={side + "-wins-select-label"}>Wins</InputLabel>
         <Select

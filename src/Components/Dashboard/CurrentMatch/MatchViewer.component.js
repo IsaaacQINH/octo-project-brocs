@@ -15,9 +15,25 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
   const blueSideRef = useRef();
   const orangeSideRef = useRef();
 
+  const [teams, setTeams] = useState([]);
+
   const [open, setOpen] = useState(false);
   const [snackbarinfoopen, setsbiopen] = useState(false);
   const [snackbarsuccessopen, setsbsopen] = useState(false);
+
+  useEffect(async () => {
+    try {
+      const {data} = await supabase
+        .from('team')
+        .select('id, name, metadata')
+        .eq('project_id', projectId)
+        .eq('deleted', false);
+
+      setTeams(data);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [projectId]);
 
   useEffect(async () => {
     if (matchId === "new") {
@@ -207,7 +223,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
             <TeamSettings side="blue" ref={blueSideRef}/>
           </Grid>
           <Grid item xs={12} md={6}>
-            <TeamSettings side="orange" ref={orangeSideRef}/>
+            <TeamSettings teams={teams} side="orange" ref={orangeSideRef}/>
           </Grid>
           <Grid item xs={12}>
             <Divider sx={{mt:3}}/>
