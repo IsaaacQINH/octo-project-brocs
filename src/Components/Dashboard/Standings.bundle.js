@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import StandingsTable from "./Standings/Standings.component";
 import {useOutletContext} from "react-router-dom";
-import * as React from "react";
 
 const Standings = () => {
     const project = useOutletContext();

@@ -4,14 +4,17 @@
   "description": "A tool to betterify Rocket League streams",
   "homepage": ".",
   "scripts": {
-    "build": "parcel build src/index.html",
-    "dev": "parcel src/index.html",
+    "analyze": "parcel build src/index.html --detailed-report",
+    "publish": "npm run build && npx http-server dist/",
+    "build": "rm -rf dist/ && parcel build src/index.html",
+    "dev": "rm -rf dist/ && parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
   },
   "author": "York Treinies <york.privat@gmail.com>",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@parcel/reporter-bundle-analyzer": "^2.8.0",
     "eslint": "8.8.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "^2.25.4",

@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import { useOutletContext } from "react-router-dom";
-import * as React from "react";
 import { useEffect, useState } from "react";
 import { supabase } from "../../Helper/supabaseClient";
 

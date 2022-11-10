@@ -6,7 +6,6 @@ import PlayerTable from "./DatabaseEditor/PlayerTable.component";
 import { FormControl, InputLabel, MenuItem, Select, Skeleton } from "@mui/material";
 import { supabase } from "../../Helper/supabaseClient";
 import { useOutletContext } from "react-router-dom";
-import * as React from "react";
 import FormDialog from "./DatabaseEditor/FormDialog.component";
 import {Add} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";

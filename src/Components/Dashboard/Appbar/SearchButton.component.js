@@ -1,7 +1,6 @@
 import IconButton from "@mui/material/IconButton";
 import { Search } from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
 import ResponsiveDialog from "../Shared/ResponsiveDialog.component";
 import { useState } from "react";
 

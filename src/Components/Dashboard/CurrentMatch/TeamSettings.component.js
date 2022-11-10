@@ -1,12 +1,27 @@
-import { forwardRef, memo, useImperativeHandle, useState } from "react";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { forwardRef, memo, useImperativeHandle, useState, useEffect } from "react";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const TeamSettings = forwardRef(({teams, side}, _ref) => {
+  const teamList = [];
   const [team, setTeam] = useState({
     id: "",
     wins: 0,
     metadata: {}
   });
+
+  useEffect(() => {
+    if (!teams) {
+      return 0;
+    }
+
+    console.log(teams);
+    teamList.length = 0;
+    teams.map((value, index) => {
+      teamList.push(<MenuItem key={index} value={value.id}>value.name</MenuItem>);
+    });
+
+    console.log(teamList);
+  }, [teams]);
 
   const handleNameChange = (e) => {
     e.preventDefault();
@@ -26,10 +41,6 @@ const TeamSettings = forwardRef(({teams, side}, _ref) => {
       setTeam(value);
     }
   }));
-
-  const teamList = teams.map((value, index) => {
-    <MenuItem key={index} value={value.id}>value.name</MenuItem>
-  });
 
   return (
     <>

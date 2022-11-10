@@ -8,7 +8,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
-import Account from "../Components/Dashboard/Sidebar/Account.component";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -16,12 +15,13 @@ import Select from "@mui/material/Select";
 import { supabase } from "../Helper/supabaseClient";
 import {Avatar, TextField} from "@mui/material";
 import { Dashboard, ListAlt, Monitor, Settings, Storage, Workspaces } from "@mui/icons-material";
-import DrawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
-import * as React from "react";
-import SearchButton from "../Components/Dashboard/Appbar/SearchButton.component";
-import ResponsiveDialog from "../Components/Dashboard/Shared/ResponsiveDialog.component";
 import DialogContentText from "@mui/material/DialogContentText";
 import {grey} from "@mui/material/colors";
+
+import Account from "../Components/Dashboard/Sidebar/Account.component";
+import SearchButton from "../Components/Dashboard/Appbar/SearchButton.component";
+import DrawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
+import ResponsiveDialog from "../Components/Dashboard/Shared/ResponsiveDialog.component";
 
 const drawerWidth = 225;
 

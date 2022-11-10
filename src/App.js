@@ -1,20 +1,21 @@
 import { render } from "react-dom";
 import { StrictMode } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material";
+import { supabase } from "./Helper/supabaseClient";
+import CssBaseline from "@mui/material/CssBaseline";
+
 import DashboardPage from "./Pages/Dashboard.page";
+import WebsitePage from "./Pages/Website.page";
+import OverlayPage from "./Pages/Overlay.page";
 import CurrentMatch from "./Components/Dashboard/CurrentMatch.bundle";
 import DatabaseEditor from "./Components/Dashboard/DatabaseEditor.bundle";
-import WebsitePage from "./Pages/Website.page";
 import Home from "./Components/Website/Home.bundle";
 import About from "./Components/Website/About.bundle";
 import Standings from "./Components/Dashboard/Standings.bundle";
-import OverlayPage from "./Pages/Overlay.page";
 import Overview from "./Components/Dashboard/Overview.bundle";
 import Login from "./Components/Website/Login.bundle";
-import { createTheme, ThemeProvider } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
 import OverlayComponent from "./Components/Overlay/Overlay.component";
-import { supabase } from "./Helper/supabaseClient";
 import LayoutEditor from "./Components/Dashboard/Layout.bundle";
 import SettingsManager from "./Components/Dashboard/Settings.bundle";
 

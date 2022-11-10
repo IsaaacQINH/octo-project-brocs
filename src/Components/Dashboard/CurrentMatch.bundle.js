@@ -1,5 +1,4 @@
 import Toolbar from "@mui/material/Toolbar";
-import * as React from "react";
 import Box from "@mui/material/Box";
 import MatchList from "./CurrentMatch/MatchList.component";
 import MatchViewer from "./CurrentMatch/MatchViewer.component";
