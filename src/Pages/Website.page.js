@@ -1,8 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Box from "@mui/material/Box";
-import {supabase} from "../Helper/supabaseClient";
-
 import ResponsiveAppBar from "../Components/Website/Appbar/Appbar.component";
+import {supabase} from "../Helper/supabaseClient";
 
 const Website = () => {
     const user = supabase.auth.user();

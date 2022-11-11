@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Alert, Fab, Grid, Snackbar, Stack, Tooltip } from "@mui/material";
@@ -6,19 +5,21 @@ import TeamSettings from "./TeamSettings.component";
 import GeneralSettings from "./GeneralSettings.component";
 import { Archive, DesktopMac, Save, Update } from "@mui/icons-material";
 import Divider from "@mui/material/Divider";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "../../../Helper/supabaseClient";
 import ResponsiveDialog from "../Shared/ResponsiveDialog.component";
+import * as React from "react";
 
 const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
   const generalSettingsRef = useRef();
   const blueSideRef = useRef();
   const orangeSideRef = useRef();
 
+  const [teams, setTeams] = useState([]);
+
   const [open, setOpen] = useState(false);
   const [snackbarinfoopen, setsbiopen] = useState(false);
   const [snackbarsuccessopen, setsbsopen] = useState(false);
-
-  const [teams, setTeams] = useState([]);
 
   useEffect(async () => {
     try {
