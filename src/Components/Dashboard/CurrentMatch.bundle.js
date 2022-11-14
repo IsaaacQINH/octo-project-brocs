@@ -13,7 +13,10 @@ const CurrentMatch = () => {
   const [loading, setLoading] = useState(false);
   const [skeleton, setSkeleton] = useState([]);
   const [updateTrigger, setUpdateTrigger] = useState(false);
+
   const [matches, setMatches] = useState([]);
+  const [teams, setTeams] = useState([]);
+
   const [selected, setSelected] = useState(null);
 
   useEffect(async () => {
@@ -54,14 +57,30 @@ const CurrentMatch = () => {
       return data;
     };
 
+    const getTeams = async () => {
+      if (!project) {
+        return [];
+      }
+      
+      const {data} = await supabase
+        .from('team')
+        .select('id, name')
+        .eq('project_id', project)
+        .eq('deleted', false);
+
+      return data;
+    }
+
     try {
       const fetchedMatches = await getMatches(memSelected);
+      const fetchedTeams = await getTeams();
 
       if (project) {
         fetchedMatches.push({id: "new", name: " + Add match"});
       }
 
       setMatches(fetchedMatches);
+      setTeams(fetchedTeams);
       setLoading(false);
     } catch (e) {
       console.error(e);
@@ -85,7 +104,7 @@ const CurrentMatch = () => {
           <MatchList loading={loading} matches={loading ? skeleton : matches} selected={selected} handleUpdate={handleUpdateSelectedMatch}/>
         </Grid>
         <Grid item xs={7} md={8}>
-          <MatchViewer matchId={selected} projectId={project} handleUpdateTrigger={handleUpdateTrigger} />
+          <MatchViewer matchId={selected} projectId={project} handleUpdateTrigger={handleUpdateTrigger} teams={teams} />
         </Grid>
       </Grid>
     </Box> :

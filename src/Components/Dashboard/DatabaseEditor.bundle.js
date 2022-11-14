@@ -3,12 +3,12 @@ import Toolbar from "@mui/material/Toolbar";
 import TeamTable from "./DatabaseEditor/TeamTable.component";
 import { useEffect, useState } from "react";
 import PlayerTable from "./DatabaseEditor/PlayerTable.component";
-import { FormControl, InputLabel, MenuItem, Select, Skeleton } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, Skeleton, Tooltip } from "@mui/material";
 import { supabase } from "../../Helper/supabaseClient";
 import { useOutletContext } from "react-router-dom";
 import * as React from "react";
 import FormDialog from "./DatabaseEditor/FormDialog.component";
-import {Add} from "@mui/icons-material";
+import {Add, Update} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 
 const getPlayer = async (project) => {
@@ -88,6 +88,15 @@ const DatabaseEditor = () => {
             >
               <Add />
             </IconButton>
+            <Tooltip title="Update table">
+              <IconButton
+                  aria-label="new"
+                  sx={{ml: 1, mt: 2, background: '#14c9de', color: 'white', '&:hover': {background: '#63e8f7'}}}
+                  onClick={() => setOpenFD(true)}
+              >
+                <Update />
+              </IconButton>
+            </Tooltip>
             {loading ? <Skeleton animation="pulse" sx={{m: 2, pb: 30}}/> :
                 table === 'team' ? <TeamTable teams={teams} /> : <PlayerTable player={player} />
             }

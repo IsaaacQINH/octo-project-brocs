@@ -1,5 +1,5 @@
-import { forwardRef, memo, useImperativeHandle, useState } from "react";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { forwardRef, memo, useImperativeHandle, useState, useEffect } from "react";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const TeamSettings = forwardRef(({teams, side}, _ref) => {
   const [team, setTeam] = useState({
@@ -10,6 +10,7 @@ const TeamSettings = forwardRef(({teams, side}, _ref) => {
 
   const handleNameChange = (e) => {
     e.preventDefault();
+    console.log(e.target.value);
     setTeam({ ...team, id: e.target.value });
   }
 
@@ -27,10 +28,6 @@ const TeamSettings = forwardRef(({teams, side}, _ref) => {
     }
   }));
 
-  const teamList = teams.map((value, index) => {
-    <MenuItem key={index} value={value.id}>value.name</MenuItem>
-  });
-
   return (
     <>
       <FormControl fullWidth>
@@ -43,7 +40,11 @@ const TeamSettings = forwardRef(({teams, side}, _ref) => {
           value={team.id}
           onChange={handleNameChange}
         >
-          {teamList}
+          {
+            teams ? teams.map((value, index) => (
+              <MenuItem key={index} value={value.id}>{value.name}</MenuItem>
+            )) : <MenuItem value={team.id}>Failed to fetch</MenuItem>
+          }
         </Select>
       </FormControl>
       <FormControl fullWidth>

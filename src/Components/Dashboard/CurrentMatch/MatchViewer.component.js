@@ -10,30 +10,14 @@ import { supabase } from "../../../Helper/supabaseClient";
 import ResponsiveDialog from "../Shared/ResponsiveDialog.component";
 import * as React from "react";
 
-const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
+const MatchViewer = ({matchId, projectId, handleUpdateTrigger, teams}) => {
   const generalSettingsRef = useRef();
   const blueSideRef = useRef();
   const orangeSideRef = useRef();
 
-  const [teams, setTeams] = useState([]);
-
   const [open, setOpen] = useState(false);
   const [snackbarinfoopen, setsbiopen] = useState(false);
   const [snackbarsuccessopen, setsbsopen] = useState(false);
-
-  useEffect(async () => {
-    try {
-      const {data} = await supabase
-        .from('team')
-        .select('id, name, metadata')
-        .eq('project_id', projectId)
-        .eq('deleted', false);
-
-      setTeams(data);
-    } catch (e) {
-      console.error(e);
-    }
-  }, [projectId]);
 
   useEffect(async () => {
     if (matchId === "new") {
@@ -45,13 +29,13 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
       });
 
       blueSideRef.current?.setTeamData({
-        name: "",
+        id: "",
         wins: 0,
         metadata: {}
       });
 
       orangeSideRef.current?.setTeamData({
-        name: "",
+        id: "",
         wins: 0,
         metadata: {}
       });
@@ -73,13 +57,13 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
       });
 
       blueSideRef.current?.setTeamData({
-        name: data.blue_name ?? "",
+        id: data.blue_name ?? "",
         wins: data.blue_wins,
         metadata: data.blue_metadata
       });
 
       orangeSideRef.current?.setTeamData({
-        name: data.orange_name ?? "",
+        id: data.orange_name ?? "",
         wins: data.orange_wins,
         metadata: data.orange_metadata
       });
@@ -98,6 +82,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
     const orangeSide = orangeSideRef.current?.getTeamData();
 
     try {
+      console.log(blueSide, orangeSide);
       const { error } = await supabase
         .from('match')
         .update({
@@ -105,10 +90,10 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
           gamedate: general.date,
           format: general.format,
           game_metadata: general.metadata,
-          blue_name: blueSide.name,
+          blue_name: blueSide.id,
           blue_wins: blueSide.wins,
           blue_metadata: blueSide.metadata,
-          orange_name: orangeSide.name,
+          orange_name: orangeSide.id,
           orange_wins: orangeSide.wins,
           orange_metadata: orangeSide.metadata,
           lastUpdateBy: localStorage.getItem('username')
@@ -220,7 +205,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger}) => {
             <Typography variant="overline" sx={{fontWeight: 900, mt: 1}}>Teams</Typography>
           </Grid>
           <Grid item xs={12} md={6}>
-            <TeamSettings side="blue" ref={blueSideRef}/>
+            <TeamSettings teams={teams} side="blue" ref={blueSideRef}/>
           </Grid>
           <Grid item xs={12} md={6}>
             <TeamSettings teams={teams} side="orange" ref={orangeSideRef}/>
