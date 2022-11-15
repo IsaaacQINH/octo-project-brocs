@@ -4,8 +4,9 @@
   "description": "A tool to betterify Rocket League streams",
   "homepage": "https://isaaacqinh.github.io/octo-project-brocs",
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "npm run gh-build",
     "deploy": "gh-pages -d dist",
+    "gh-build": "parcel build src/index.html --public-url /octo-project-brocs",
     "build": "parcel build src/index.html",
     "dev": "parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
