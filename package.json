@@ -2,8 +2,10 @@
   "name": "project-brocs",
   "version": "0.1",
   "description": "A tool to betterify Rocket League streams",
-  "homepage": ".",
+  "homepage": "https://isaaacqing.github.io/octo-project-brocs",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "parcel build src/index.html",
     "dev": "parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
@@ -17,6 +19,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
+    "gh-pages": "^4.0.0",
     "parcel": "2.2.1",
     "prettier": "2.5.1",
     "process": "^0.11.10"
