@@ -10,7 +10,6 @@ const Standings = () => {
 
       return (
         <Box>
-          <Toolbar />
             {
                 project ?
                 <>

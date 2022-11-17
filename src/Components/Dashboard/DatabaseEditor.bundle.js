@@ -74,7 +74,6 @@ const DatabaseEditor = () => {
 
   return (
     <Box>
-      <Toolbar />
       {
         project ?
           <Box>

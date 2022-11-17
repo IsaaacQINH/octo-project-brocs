@@ -36,7 +36,6 @@ const SettingsManager = () => {
 
   return (
     <Box>
-      <Toolbar />
       {
         project ?
         <Box>

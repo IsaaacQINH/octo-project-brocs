@@ -4,7 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 const LayoutEditor = () => {
   return (
     <Box>
-      <Toolbar />
+      
     </Box>
   );
 };

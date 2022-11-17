@@ -16,7 +16,7 @@ import {Link} from "react-router-dom";
 import { supabase } from '../../../Helper/supabaseClient';
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Logout'];
+const settings = ['Profile', 'Billing', 'Logout'];
 
 const ResponsiveAppBar = ({user}) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -149,15 +149,15 @@ const ResponsiveAppBar = ({user}) => {
                                 <Box sx={{ flexGrow: 0 }}>
                                     <Tooltip title="Account">
                                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                            <Avatar alt={user.user_metadata.full_name ?? user.user_metadata.name} src="/static/images/avatar/2.jpg" />
+                                            <Avatar alt={user ? user.user_metadata.full_name : "name"} src={user ? user.user_metadata.avatar_url : "null"} />
                                         </IconButton>
                                     </Tooltip>
                                     <Menu
-                                        sx={{ mt: '45px' }}
+                                        sx={{ mt: 1 }}
                                         id="menu-appbar"
                                         anchorEl={anchorElUser}
                                         anchorOrigin={{
-                                            vertical: 'top',
+                                            vertical: 'bottom',
                                             horizontal: 'right',
                                         }}
                                         keepMounted

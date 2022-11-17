@@ -98,7 +98,6 @@ const CurrentMatch = () => {
   return (
     project ?
     <Box>
-      <Toolbar />
       <Grid container>
         <Grid item xs={5} md={4}>
           <MatchList loading={loading} matches={loading ? skeleton : matches} selected={selected} handleUpdate={handleUpdateSelectedMatch}/>
