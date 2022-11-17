@@ -1,7 +1,8 @@
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { grey } from "@mui/material/colors";
 import Toolbar from "@mui/material/Toolbar";
+import { supabase } from "../../Helper/supabaseClient";
 
 const GridHeadline = ({main, sub}) => {
     return (

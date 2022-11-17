@@ -201,6 +201,8 @@ const DashboardPage = ({ wdw }) => {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          background: 'rgba(255,255,255,0.5)',
+          backdropFilter: 'blur(5px)'
         }}
         color="transparent"
       >
@@ -278,9 +280,10 @@ const DashboardPage = ({ wdw }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          width: { sm: `calc(100% - ${drawerWidth}px)` }
         }}
       >
+        <Toolbar />
         <Outlet context={project} />
       </Box>
       <ResponsiveDialog
