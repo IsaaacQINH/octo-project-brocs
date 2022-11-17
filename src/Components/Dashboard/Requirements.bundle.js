@@ -20,7 +20,7 @@ const GridHeadline = ({main, sub}) => {
 const Requirements = () => {
   return (
     <Box>
-      <Grid container spacing={2} sx={{px: 35, mt: 2}}>
+      <Grid container spacing={2} sx={{px: { xs: 2, md: 35}, mt: 2}}>
         <GridHeadline main="Requirements" sub="_req_" />
         <Grid item xs={12}>
             <Typography variant="body1">
