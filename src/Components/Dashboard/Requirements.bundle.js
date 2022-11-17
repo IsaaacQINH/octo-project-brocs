@@ -1,8 +1,7 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { grey } from "@mui/material/colors";
-import Toolbar from "@mui/material/Toolbar";
-import { supabase } from "../../Helper/supabaseClient";
+
 
 const GridHeadline = ({main, sub}) => {
     return (
@@ -18,6 +17,7 @@ const GridHeadline = ({main, sub}) => {
 }
 
 const Requirements = () => {
+
   return (
     <Box>
       <Grid container spacing={2} sx={{px: { xs: 2, md: 35}, mt: 2}}>
@@ -28,6 +28,9 @@ const Requirements = () => {
             </Typography>
         </Grid>
         <GridHeadline main="BakkesMod Plugins" sub="_plugins_" />
+        <Grid item xs={12}>
+         //Download Buttons here
+        </Grid>
         <GridHeadline main="OBS Studio" sub="_obs_" />
         <GridHeadline main="Browser" sub="_browser_" />
         <GridHeadline main="Discord" sub="_discord_" />
