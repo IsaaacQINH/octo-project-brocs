@@ -108,7 +108,6 @@ const CurrentMatch = () => {
       </Grid>
     </Box> :
     <Box sx={{width: '100%', textAlign: 'center', mt: 10}}>
-      <Toolbar />
       Select a project...
     </Box>
   );
