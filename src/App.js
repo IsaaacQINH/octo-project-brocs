@@ -17,6 +17,7 @@ import { supabase } from "./Helper/supabaseClient";
 import LayoutEditor from "./Components/Dashboard/Layout.bundle";
 import SettingsManager from "./Components/Dashboard/Settings.bundle";
 import StringHelper from "./Helper/String";
+import Requirements from "./Components/Dashboard/Requirements.bundle";
 
 const App = () => {
   const session = supabase.auth.session();
@@ -45,6 +46,7 @@ const App = () => {
               <Route path="database" element={<DatabaseEditor />} />
               <Route path="layout" element={<LayoutEditor />} />
               <Route path="settings" element={<SettingsManager />} />
+              <Route path="requirements" element={<Requirements />} />
             </Route>
             <Route path="" element={<WebsitePage />}>
               <Route path="" element={<Home />} />
