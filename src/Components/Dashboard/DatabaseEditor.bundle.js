@@ -7,14 +7,14 @@ import { FormControl, InputLabel, MenuItem, Select, Skeleton, Tooltip } from "@m
 import { supabase } from "../../Helper/supabaseClient";
 import { useOutletContext } from "react-router-dom";
 import * as React from "react";
-import FormDialog from "./DatabaseEditor/FormDialog.component";
+import { FormDialog, dialogTeamContent } from "./DatabaseEditor/FormDialog.component";
 import {Add, Update} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 
 const getPlayer = async (project) => {
   const { data } = await supabase
     .from('player')
-    .select('name, steam_id, matches_played, matches_wins, team ( name )')
+    .select('name, player_id, matches_played, matches_wins, team ( name )')
     .eq('project_id', project);
 
   return data;
@@ -36,6 +36,7 @@ const DatabaseEditor = () => {
   const [player, setPlayer] = useState([]);
   const [teams, setTeam] = useState([]);
 
+  const [openUpdateDialog, setOpenUD] = useState(false);
   const [openFormDialog, setOpenFD] = useState(false);
 
   useEffect(async () => {
@@ -58,6 +59,18 @@ const DatabaseEditor = () => {
     e.preventDefault();
     setTable(e.target.value);
   };
+
+  const handleTeamInsert = async () => {
+    try {
+      const {data} = await supabase
+        .from('team')
+        .insert({
+          
+        })
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   return (
     <Box>
@@ -92,7 +105,7 @@ const DatabaseEditor = () => {
               <IconButton
                   aria-label="new"
                   sx={{ml: 1, mt: 2, background: '#14c9de', color: 'white', '&:hover': {background: '#63e8f7'}}}
-                  onClick={() => setOpenFD(true)}
+                  onClick={() => setOpenUD(true)}
               >
                 <Update />
               </IconButton>
@@ -101,10 +114,20 @@ const DatabaseEditor = () => {
                 table === 'team' ? <TeamTable teams={teams} /> : <PlayerTable player={player} />
             }
             <FormDialog
-                type="New"
+                type={"New " + table.capitalize()}
                 open={openFormDialog}
+                content={dialogTeamContent}
+                actionName="Save"
                 handleClose={() => setOpenFD(false)}
-                handleSubmit={() => setOpenFD(false)}
+                handleSubmit={() => handleTeamInsert()}
+            />
+            <FormDialog
+                type={"Update " + table.capitalize()}
+                content={<>Are you sure you want to update the <b>{table.capitalize()}</b> table?</>}
+                open={openUpdateDialog}
+                actionName="Confirm"
+                handleClose={() => setOpenUD(false)}
+                handleSubmit={() => setOpenUD(false)}
             />
           </Box> :
           <Box sx={{width: '100%', textAlign: 'center', mt: 10}}>

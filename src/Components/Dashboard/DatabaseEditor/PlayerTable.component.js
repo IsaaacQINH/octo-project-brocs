@@ -10,10 +10,10 @@ const PlayerTable = ({player}) => {
       label: 'Player',
     },
     {
-      id: 'steamid',
+      id: 'playerid',
       numeric: true,
       disablePadding: false,
-      label: 'Steam ID',
+      label: 'Player ID',
     },
     {
       id: 'team',
@@ -42,7 +42,7 @@ const PlayerTable = ({player}) => {
   ];
 
   player.forEach(p => {
-    rows.push(createPlayerData(p.name, p.steam_id, p.team.name, p.matches_played, p.matches_wins, p.matches_played - p.matches_wins));
+    rows.push(createPlayerData(p.name, p.player_id, p.team.name, p.matches_played, p.matches_wins, p.matches_played - p.matches_wins));
   });
 
   return <EnhancedTable head={headCells} rows={rows} />

@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {Podcasts} from "@mui/icons-material";
 import {Link} from "react-router-dom";
+import { supabase } from '../../../Helper/supabaseClient';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Logout'];
@@ -32,7 +33,16 @@ const ResponsiveAppBar = ({user}) => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = async (e) => {
+        console.log(e.target.id);
+        switch (e.target.id) {
+            case 'logout':
+                await supabase.auth.signOut();
+                break;
+            default:
+                break;
+        }
+
         setAnchorElUser(null);
     };
 
@@ -160,7 +170,7 @@ const ResponsiveAppBar = ({user}) => {
                                     >
                                         {settings.map((setting) => (
                                             <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                                <Typography textAlign="center">{setting}</Typography>
+                                                <Typography textAlign="center" id={setting.toLowerCase()}>{setting}</Typography>
                                             </MenuItem>
                                         ))}
                                     </Menu>

@@ -2,7 +2,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import {Grid, TextField} from "@mui/material";
 import ResponsiveDialog from "../Shared/ResponsiveDialog.component";
 
-const dialogContent = <>
+const dialogTeamContent = <>
     <DialogContentText sx={{mb: 1}}>
         Add teams to project database.
     </DialogContentText>
@@ -15,6 +15,7 @@ const dialogContent = <>
                 size="small"
                 fullWidth
                 variant="outlined"
+                placeholder="Team Name"
             />
         </Grid>
         <Grid item xs={6}>
@@ -25,6 +26,7 @@ const dialogContent = <>
                 size="small"
                 fullWidth
                 variant="outlined"
+                value={0}
             />
             <TextField
                 margin="dense"
@@ -34,6 +36,7 @@ const dialogContent = <>
                 size="small"
                 fullWidth
                 variant="outlined"
+                value={0}
             />
         </Grid>
         <Grid item xs={6}>
@@ -44,6 +47,7 @@ const dialogContent = <>
                 size="small"
                 fullWidth
                 variant="outlined"
+                value={0}
             />
             <TextField
                 margin="dense"
@@ -53,23 +57,27 @@ const dialogContent = <>
                 size="small"
                 fullWidth
                 variant="outlined"
+                value={0}
             />
         </Grid>
     </Grid>
 </>;
 
-const FormDialog = ({open, type, handleSubmit, handleClose}) => {
+const FormDialog = ({open, content, type, actionName, handleSubmit, handleClose}) => {
     return (
         <ResponsiveDialog
             open={open}
             title={type}
-            content={dialogContent}
+            content={content}
             color="success"
-            actionName="Save"
+            actionName={actionName}
             action={handleSubmit}
             handleClose={handleClose}
         />
     );
 }
 
-export default FormDialog;
+export {
+    FormDialog,
+    dialogTeamContent
+};

@@ -16,8 +16,10 @@ import OverlayComponent from "./Components/Overlay/Overlay.component";
 import { supabase } from "./Helper/supabaseClient";
 import LayoutEditor from "./Components/Dashboard/Layout.bundle";
 import SettingsManager from "./Components/Dashboard/Settings.bundle";
+import StringHelper from "./Helper/String";
 
 const App = () => {
+  const session = supabase.auth.session();
   const user = supabase.auth.user();
 
   if (!user) {
@@ -27,6 +29,9 @@ const App = () => {
   if (user && localStorage.getItem('username') !== user.user_metadata.full_name) {
     localStorage.setItem('username', user.user_metadata.full_name);
   }
+
+  //Load Helper once
+  StringHelper();
 
   return (
     <StrictMode>
