@@ -1,6 +1,6 @@
 import { render } from "react-dom";
 import { StrictMode } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import DashboardPage from "./Pages/Dashboard.page";
 import CurrentMatch from "./Components/Dashboard/CurrentMatch.bundle";
 import DatabaseEditor from "./Components/Dashboard/DatabaseEditor.bundle";
@@ -18,6 +18,7 @@ import LayoutEditor from "./Components/Dashboard/Layout.bundle";
 import SettingsManager from "./Components/Dashboard/Settings.bundle";
 import StringHelper from "./Helper/String";
 import Requirements from "./Components/Dashboard/Requirements.bundle";
+import JoinProject from "./Components/Website/JoinProject.bundle";
 
 const App = () => {
   const session = supabase.auth.session();
@@ -58,6 +59,8 @@ const App = () => {
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="logout" element={<About />} />
+            <Route path="join" element={<Navigate to="/" />} />
+            <Route path="join/:project" element={<JoinProject />} />
           </Routes>
         </BrowserRouter>
     </StrictMode>

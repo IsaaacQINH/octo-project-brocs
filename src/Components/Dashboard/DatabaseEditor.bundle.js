@@ -1,15 +1,20 @@
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import TeamTable from "./DatabaseEditor/TeamTable.component";
+import * as React from "react";
 import { useEffect, useState } from "react";
-import PlayerTable from "./DatabaseEditor/PlayerTable.component";
-import { FormControl, InputLabel, MenuItem, Select, Skeleton, Tooltip } from "@mui/material";
 import { supabase } from "../../Helper/supabaseClient";
 import { useOutletContext } from "react-router-dom";
-import * as React from "react";
-import { FormDialog, dialogTeamContent, dialogPlayerContent } from "./DatabaseEditor/FormDialog.component";
-import {Add, Update} from "@mui/icons-material";
+
+import Box from "@mui/material/Box";
+import PlayerTable from "./DatabaseEditor/PlayerTable.component";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Skeleton from "@mui/material/Skeleton";
+import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
+import {Add, Update} from "@mui/icons-material";
+import { FormDialog, dialogTeamContent, dialogPlayerContent } from "./DatabaseEditor/FormDialog.component";
+import TeamTable from "./DatabaseEditor/TeamTable.component";
 
 const getPlayer = async (project) => {
   const { data } = await supabase

@@ -72,11 +72,22 @@ const dialogPlayerContent = <>
             <TextField
                 id="name"
                 label="Name"
-                type="name"
+                type="text"
                 size="small"
                 fullWidth
                 variant="outlined"
                 placeholder="Team Name"
+            />
+        </Grid>
+        <Grid item xs={12}>
+            <TextField
+                id="playerid"
+                label="Primary ID"
+                type="text"
+                size="small"
+                fullWidth
+                variant="outlined"
+                placeholder="Epic ID / Steam ID"
             />
         </Grid>
         <Grid item xs={6}>
