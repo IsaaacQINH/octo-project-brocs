@@ -7,7 +7,7 @@ import { FormControl, InputLabel, MenuItem, Select, Skeleton, Tooltip } from "@m
 import { supabase } from "../../Helper/supabaseClient";
 import { useOutletContext } from "react-router-dom";
 import * as React from "react";
-import { FormDialog, dialogTeamContent } from "./DatabaseEditor/FormDialog.component";
+import { FormDialog, dialogTeamContent, dialogPlayerContent } from "./DatabaseEditor/FormDialog.component";
 import {Add, Update} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 
@@ -112,14 +112,25 @@ const DatabaseEditor = () => {
             {loading ? <Skeleton animation="pulse" sx={{m: 2, pb: 30}}/> :
                 table === 'team' ? <TeamTable teams={teams} /> : <PlayerTable player={player} />
             }
-            <FormDialog
-                type={"New " + table.capitalize()}
-                open={openFormDialog}
-                content={dialogTeamContent}
-                actionName="Save"
-                handleClose={() => setOpenFD(false)}
-                handleSubmit={() => handleTeamInsert()}
-            />
+            {
+              table === 'team' ?
+                <FormDialog
+                  type={"New " + table.capitalize()}
+                  open={openFormDialog}
+                  content={dialogTeamContent}
+                  actionName="Save"
+                  handleClose={() => setOpenFD(false)}
+                  handleSubmit={() => handleTeamInsert()}
+                /> :
+                <FormDialog
+                  type={"New " + table.capitalize()}
+                  open={openFormDialog}
+                  content={dialogPlayerContent}
+                  actionName="Save"
+                  handleClose={() => setOpenFD(false)}
+                  handleSubmit={() => handleTeamInsert()}
+                />
+            }
             <FormDialog
                 type={"Update " + table.capitalize()}
                 content={<>Are you sure you want to update the <b>{table.capitalize()}</b> table?</>}

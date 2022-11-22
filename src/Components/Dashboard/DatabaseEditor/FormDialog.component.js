@@ -63,6 +63,46 @@ const dialogTeamContent = <>
     </Grid>
 </>;
 
+const dialogPlayerContent = <>
+    <DialogContentText sx={{mb: 1}}>
+        Add teams to project database.
+    </DialogContentText>
+    <Grid container spacing={1}>
+        <Grid item xs={12}>
+            <TextField
+                id="name"
+                label="Name"
+                type="name"
+                size="small"
+                fullWidth
+                variant="outlined"
+                placeholder="Team Name"
+            />
+        </Grid>
+        <Grid item xs={6}>
+            <TextField
+                id="match_wins"
+                label="Match Wins"
+                type="match_wins"
+                size="small"
+                fullWidth
+                variant="outlined"
+                value={0}
+            />
+            <TextField
+                margin="dense"
+                id="series_wins"
+                label="Series Wins"
+                type="serie_wins"
+                size="small"
+                fullWidth
+                variant="outlined"
+                value={0}
+            />
+        </Grid>
+    </Grid>
+</>;
+
 const FormDialog = ({open, content, type, actionName, handleSubmit, handleClose}) => {
     return (
         <ResponsiveDialog
@@ -79,5 +119,6 @@ const FormDialog = ({open, content, type, actionName, handleSubmit, handleClose}
 
 export {
     FormDialog,
-    dialogTeamContent
+    dialogTeamContent,
+    dialogPlayerContent
 };
