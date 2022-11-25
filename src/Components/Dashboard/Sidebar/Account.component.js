@@ -13,7 +13,7 @@ import { ArrowDropDown } from "@mui/icons-material";
  *    (Profile page, Settings, Project selection, Signout)
  */
 
-const Account = ({user}) => {
+const Account = ({user, handleOpenUserMenu, handleCloseUserMenu}) => {
   return (
     <Box sx={{ p: 2 }}>
       <Avatar alt={user ? user.user_metadata.full_name : "name"} src={user ? user.user_metadata.avatar_url : "null"} />
@@ -22,7 +22,7 @@ const Account = ({user}) => {
           {user ? user.user_metadata.full_name : "NullAccount"}
         </Typography>
         <Tooltip title="Account Options" style={{alignSelf: "flex-end"}}>
-          <IconButton size="small">
+          <IconButton size="small" onClick={handleOpenUserMenu}>
             <ArrowDropDown />
           </IconButton>
         </Tooltip>

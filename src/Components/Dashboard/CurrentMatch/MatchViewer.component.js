@@ -82,7 +82,6 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger, teams}) => {
     const orangeSide = orangeSideRef.current?.getTeamData();
 
     try {
-      console.log(blueSide, orangeSide);
       const { error } = await supabase
         .from('match')
         .update({
@@ -124,10 +123,10 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger, teams}) => {
           gamedate: general.date,
           format: general.format,
           game_metadata: general.metadata,
-          blue_name: blueSide.name,
+          blue_name: blueSide.id,
           blue_wins: blueSide.wins,
           blue_metadata: blueSide.metadata,
-          orange_name: orangeSide.name,
+          orange_name: orangeSide.id,
           orange_wins: orangeSide.wins,
           orange_metadata: orangeSide.metadata,
           project_id: projectId,
@@ -149,7 +148,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger, teams}) => {
     }
 
     setsbiopen(true);
-    await navigator.clipboard.writeText(`http://localhost:1234/overlay/${projectId}/${matchId}`);
+    await navigator.clipboard.writeText(`http://${window.location.host}/overlay/${projectId}/${matchId}`);
   }
 
   const handleDialogClickOpen = () => {

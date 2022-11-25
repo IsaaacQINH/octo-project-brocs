@@ -34,7 +34,6 @@ const ResponsiveAppBar = ({user}) => {
     };
 
     const handleCloseUserMenu = async (e) => {
-        console.log(e.target.id);
         switch (e.target.id) {
             case 'logout':
                 await supabase.auth.signOut();

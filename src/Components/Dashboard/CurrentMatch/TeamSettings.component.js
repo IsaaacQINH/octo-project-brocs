@@ -10,7 +10,6 @@ const TeamSettings = forwardRef(({teams, side}, _ref) => {
 
   const handleNameChange = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     setTeam({ ...team, id: e.target.value });
   }
 

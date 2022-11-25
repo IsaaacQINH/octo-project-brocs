@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import { useOutletContext } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { supabase } from "../../Helper/supabaseClient";
+import { Button, Typography } from "@mui/material";
 
 const SettingsManager = () => {
   const project = useOutletContext();
@@ -34,12 +34,29 @@ const SettingsManager = () => {
     }
   }, [project]);
 
+  const handleCopyInviteURL = async (e) => {
+    if (!project) {
+      return 0;
+    }
+
+    await navigator.clipboard.writeText(`http://${window.location.host}/join/${project}`);
+    e.target.innerText = "Copied!";
+
+    setTimeout(() => {
+      e.target.innerText = "Copy to clipboard";
+    }, 2500);
+  }
+
   return (
     <Box>
       {
         project ?
         <Box>
-          <code>{config}</code>
+          <Typography variant="body1" sx={{mt: 2, textAlign: 'center'}}>Coming soon: settings
+          </Typography>
+          <Typography variant="body1" sx={{mt: 5, textAlign: 'center'}}>Invite Link:
+            <Button onClick={handleCopyInviteURL}>Copy to clipboard</Button>
+          </Typography>
         </Box> :
         <Box sx={{width: '100%', textAlign: 'center', mt: 10}}>
           Select a project...

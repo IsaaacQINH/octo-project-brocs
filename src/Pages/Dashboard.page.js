@@ -14,7 +14,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { supabase } from "../Helper/supabaseClient";
-import {Avatar, TextField} from "@mui/material";
+import {Avatar, Menu, TextField, Typography} from "@mui/material";
 import { Dashboard, Inventory, ListAlt, Monitor, Settings, Storage, Workspaces } from "@mui/icons-material";
 import DrawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
 import * as React from "react";
@@ -39,6 +39,7 @@ const links = [
 ];
 
 const addField = {id: "new", name: "+ Add project"};
+const settings = ["Return to Homepage", "Profile"];
 
 const DashboardPage = ({ wdw }) => {
   const [openNewProject, setOpenNP] = useState(false);
@@ -47,6 +48,7 @@ const DashboardPage = ({ wdw }) => {
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState("");
   const [newProject, setNewProject] = useState("");
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const user = supabase.auth.user();
 
@@ -97,6 +99,25 @@ const DashboardPage = ({ wdw }) => {
     }
 
   }, [user]);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = async (e) => {
+    switch (e.target.id) {
+        case 'logout':
+          await supabase.auth.signOut();
+          break;
+        case 'return to homepage':
+          return window.location.href = "/";
+          break;
+        default:
+          break;
+    }
+
+    setAnchorElUser(null);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -232,7 +253,12 @@ const DashboardPage = ({ wdw }) => {
             </Select>
           </FormControl>
           <Box sx={{width: { xs: 250, sm: `calc(100% - 125px)` }}}>
-            <Avatar sx={{ float: "right", display: {sm: "none"}}} alt={user ? user.user_metadata.full_name : "name"} src={user ? user.user_metadata.avatar_url : "null"} />
+              <Avatar 
+                sx={{ float: "right", display: {sm: "none"}}} 
+                alt={user ? user.user_metadata.full_name : "name"} 
+                src={user ? user.user_metadata.avatar_url : "null"} 
+                onClick={handleOpenUserMenu}
+              />
             <SearchButton />
           </Box>
         </Toolbar>
@@ -271,7 +297,7 @@ const DashboardPage = ({ wdw }) => {
           }}
           open
         >
-          <Account user={user}/>
+          <Account user={user} handleOpenUserMenu={handleOpenUserMenu} handleCloseUserMenu={handleCloseUserMenu}/>
           <Divider />
           <DrawerComponent links={links} />
         </Drawer>
@@ -296,6 +322,28 @@ const DashboardPage = ({ wdw }) => {
           action={handleProjectCreation}
           handleClose={handleProjectCancel}
       />
+       <Menu
+          sx={{ mt: 1 }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          {settings.map((setting) => (
+              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" id={setting.toLowerCase()}>{setting}</Typography>
+              </MenuItem>
+          ))}
+        </Menu>
     </Box> : <Navigate to="/login" />
   );
 };

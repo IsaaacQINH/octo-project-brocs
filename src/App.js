@@ -12,7 +12,6 @@ import OverlayPage from "./Pages/Overlay.page";
 import Overview from "./Components/Dashboard/Overview.bundle";
 import Login from "./Components/Website/Login.bundle";
 import CssBaseline from "@mui/material/CssBaseline";
-import OverlayComponent from "./Components/Overlay/Overlay.component";
 import { supabase } from "./Helper/supabaseClient";
 import LayoutEditor from "./Components/Dashboard/Layout.bundle";
 import SettingsManager from "./Components/Dashboard/Settings.bundle";
@@ -53,10 +52,9 @@ const App = () => {
               <Route path="" element={<Home />} />
               <Route path="about" element={<About />} />
             </Route>
-            <Route path="overlay" element={<OverlayPage />}>
-              <Route path=":project" element={<OverlayComponent />} />
-              <Route path=":project/:match" element={<OverlayComponent />} />
-            </Route>
+            <Route path="overlay" element={<Navigate to="/dashboard/current" />} />
+            <Route path="overlay/:project" element={<OverlayPage />} />
+            <Route path="overlay/:project/:match" element={<OverlayPage />} />
             <Route path="login" element={<Login />} />
             <Route path="logout" element={<About />} />
             <Route path="join" element={<Navigate to="/" />} />
