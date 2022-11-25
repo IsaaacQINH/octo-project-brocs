@@ -95,7 +95,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger, teams}) => {
           orange_name: orangeSide.id,
           orange_wins: orangeSide.wins,
           orange_metadata: orangeSide.metadata,
-          lastUpdateBy: localStorage.getItem('username')
+          lastUpdateBy: localStorage.getItem('username') || 'USR_ERROR'
         })
         .eq('id', matchId)
         .single();
@@ -130,7 +130,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger, teams}) => {
           orange_wins: orangeSide.wins,
           orange_metadata: orangeSide.metadata,
           project_id: projectId,
-          lastUpdateBy: localStorage.getItem('username')
+          lastUpdateBy: localStorage.getItem('username') || 'USR_ERROR'
         });
       handleUpdateTrigger();
 
@@ -179,7 +179,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger, teams}) => {
         .from('match')
         .update({
           deleted: true,
-          lastUpdateBy: localStorage.getItem('username')
+          lastUpdateBy: localStorage.getItem('username') || 'USR_ERROR'
         })
         .eq('id', id)
         .single();

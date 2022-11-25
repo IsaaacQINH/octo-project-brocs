@@ -13,8 +13,11 @@ import Skeleton from "@mui/material/Skeleton";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import {Add, Update} from "@mui/icons-material";
-import { FormDialog, dialogTeamContent, dialogPlayerContent } from "./DatabaseEditor/FormDialog.component";
+import { FormDialog } from "./DatabaseEditor/FormDialog.component";
 import TeamTable from "./DatabaseEditor/TeamTable.component";
+import NewPlayer from "./DatabaseEditor/NewPlayer.component";
+import NewTeam from "./DatabaseEditor/NewTeam.component";
+import { useRef } from "react";
 
 const getPlayer = async (project) => {
   const { data } = await supabase
@@ -28,7 +31,7 @@ const getPlayer = async (project) => {
 const getTeams = async (project) => {
   const { data } = await supabase
     .from('team')
-    .select('name, match_wins, match_losses')
+    .select('id, name, match_wins, match_losses')
     .eq('project_id', project);
 
   return data;
@@ -38,16 +41,19 @@ const DatabaseEditor = () => {
   const project = useOutletContext();
   const [loading, setLoading] = useState(false);
   const [table, setTable] = useState('team');
-  const [player, setPlayer] = useState([]);
+  const [players, setPlayers] = useState([]);
   const [teams, setTeam] = useState([]);
 
   const [openUpdateDialog, setOpenUD] = useState(false);
   const [openFormDialog, setOpenFD] = useState(false);
 
+  const playerRef = useRef();
+  const teamRef = useRef();
+
   useEffect(async () => {
     if (!project) {
       setTeam([]);
-      setPlayer([]);
+      setPlayers([]);
       return 0;
     }
 
@@ -55,7 +61,7 @@ const DatabaseEditor = () => {
     if (table === 'team') {
       setTeam(await getTeams(project));
     } else {
-      setPlayer(await getPlayer(project));
+      setPlayers(await getPlayer(project));
     }
     setLoading(false);
   }, [table, project]);
@@ -66,17 +72,56 @@ const DatabaseEditor = () => {
   };
 
   const handleTeamInsert = async () => {
+    const teamInput = teamRef.current?.getTeamData();
+
+    if (!teamInput) {
+      return;
+    }
+
     try {
       const {data} = await supabase
         .from('team')
         .insert({
-          
-        })
+          project_id: project,
+          name: teamInput.name,
+          metadata: {
+            prefix: teamInput.prefix,
+            logoURL: teamInput.logo
+          },
+          lastUpdateBy: localStorage.getItem('username') || 'USR_ERROR'
+        });
+        setOpenFD(false);
     } catch (e) {
       console.error(e);
     }
   }
 
+  const handlePlayerInsert = async () => {
+    const playerInput = playerRef.current?.getPlayerData();
+
+    if (!playerInput) {
+      return;
+    }
+
+    try {
+      const {data} = await supabase
+        .from('player')
+        .insert({
+          project_id: project,
+          name: playerInput.name,
+          team_id: playerInput.team,
+          player_id: playerInput.playerid,
+          metadata: {
+            portrait: playerInput.portrait,
+            country: playerInput.country
+          },
+          lastUpdateBy: localStorage.getItem('username') || 'USR_ERROR'
+        });
+        setOpenFD(false);
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return (
     <Box>
       {
@@ -115,25 +160,25 @@ const DatabaseEditor = () => {
               </IconButton>
             </Tooltip>
             {loading ? <Skeleton animation="pulse" sx={{m: 2, pb: 30}}/> :
-                table === 'team' ? <TeamTable teams={teams} /> : <PlayerTable player={player} />
+                table === 'team' ? <TeamTable teams={teams} /> : <PlayerTable player={players} />
             }
             {
               table === 'team' ?
                 <FormDialog
                   type={"New " + table.capitalize()}
                   open={openFormDialog}
-                  content={dialogTeamContent}
+                  content={<NewTeam ref={teamRef}/>}
                   actionName="Save"
                   handleClose={() => setOpenFD(false)}
-                  handleSubmit={() => handleTeamInsert()}
+                  handleSubmit={handleTeamInsert}
                 /> :
                 <FormDialog
                   type={"New " + table.capitalize()}
                   open={openFormDialog}
-                  content={dialogPlayerContent}
+                  content={<NewPlayer teams={teams} ref={playerRef} />}
                   actionName="Save"
                   handleClose={() => setOpenFD(false)}
-                  handleSubmit={() => handleTeamInsert()}
+                  handleSubmit={handlePlayerInsert}
                 />
             }
             <FormDialog
