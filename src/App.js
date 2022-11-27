@@ -18,6 +18,7 @@ import SettingsManager from "./Components/Dashboard/Settings.bundle";
 import StringHelper from "./Helper/String";
 import Requirements from "./Components/Dashboard/Requirements.bundle";
 import JoinProject from "./Components/Website/JoinProject.bundle";
+import Tutorial from "./Components/Dashboard/Tutorial.bundle";
 
 const App = () => {
   const session = supabase.auth.session();
@@ -47,6 +48,7 @@ const App = () => {
               <Route path="layout" element={<LayoutEditor />} />
               <Route path="settings" element={<SettingsManager />} />
               <Route path="requirements" element={<Requirements />} />
+              <Route path="tutorial" element={<Tutorial />} />
             </Route>
             <Route path="" element={<WebsitePage />}>
               <Route path="" element={<Home />} />

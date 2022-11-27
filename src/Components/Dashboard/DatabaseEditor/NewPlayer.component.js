@@ -1,14 +1,20 @@
-import { DialogContentText, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import DialogContentText from "@mui/material/DialogContentText";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
 import { forwardRef, memo, useImperativeHandle, useState } from "react";
 import { countryList } from "../../../Helper/countryList";
 
 const NewPlayer = forwardRef(({teams}, _ref) => {
     const [player, setPlayer] = useState({
-        name: "",
-        playerid: "",
-        team: "",
-        portrait: "",
-        country: ""
+        name: null,
+        playerid: null,
+        team: null,
+        portrait: null,
+        country: null
     });
 
     useImperativeHandle(_ref, () => ({
@@ -33,7 +39,7 @@ const NewPlayer = forwardRef(({teams}, _ref) => {
     return (
         <>
             <DialogContentText sx={{mb: 1}}>
-                Add teams to project database.
+                Add player to project database.
             </DialogContentText>
             <Grid container spacing={1}>
                 <Grid item xs={12}>
@@ -47,6 +53,8 @@ const NewPlayer = forwardRef(({teams}, _ref) => {
                         placeholder="Team Name"
                         value={player.name}
                         onChange={handleChange}
+                        error={player.name?.length === 0 ? true : false}
+                        helperText={player.name?.length === 0 ? "Can't be empty" : ""}
                     />
                     <TextField
                         sx={{mt: 1}}
@@ -59,6 +67,8 @@ const NewPlayer = forwardRef(({teams}, _ref) => {
                         placeholder="Epic ID / Steam ID"
                         value={player.playerid}
                         onChange={handleChange}
+                        error={player.playerid?.length === 0 ? true : false}
+                        helperText={player.playerid?.length === 0 ? "Can't be empty" : ""}
                     />
                     <FormControl fullWidth sx={{mt:1}}>
                         <InputLabel size="small" id="team-label">Team</InputLabel>
@@ -70,6 +80,7 @@ const NewPlayer = forwardRef(({teams}, _ref) => {
                             value={player.team}
                             onChange={(e) => handleSelect(e, 'team')}
                         >
+                            <MenuItem key="none" value={null}>No Team</MenuItem>
                             {
                                 teams ? teams.map((value, index) => (
                                     <MenuItem key={index} value={value.id}>{value.name}</MenuItem>
@@ -88,6 +99,8 @@ const NewPlayer = forwardRef(({teams}, _ref) => {
                         placeholder="Link to portrait"
                         value={player.portrait}
                         onChange={handleChange}
+                        error={player.portrait?.length === 0 ? true : false}
+                        helperText={player.portrait?.length === 0 ? "Can't be empty" : ""}
                     />
                     <FormControl fullWidth sx={{mt:1}}>
                         <InputLabel size="small" id="country-label">Country</InputLabel>
@@ -99,6 +112,7 @@ const NewPlayer = forwardRef(({teams}, _ref) => {
                             value={player.country}
                             onChange={(e) => handleSelect(e, 'country')}
                         >
+                            <MenuItem key="none" value={null}>Unknown</MenuItem>
                             {
                                 countryList.map((value, index) => (
                                     <MenuItem key={index} value={value}>{value}</MenuItem>

@@ -15,7 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { supabase } from "../Helper/supabaseClient";
 import {Avatar, Menu, TextField, Typography} from "@mui/material";
-import { Dashboard, Inventory, ListAlt, Monitor, Settings, Storage, Workspaces } from "@mui/icons-material";
+import { Dashboard, Inventory, ListAlt, Monitor, QuestionMark, Settings, Storage, Workspaces } from "@mui/icons-material";
 import DrawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
 import * as React from "react";
 import SearchButton from "../Components/Dashboard/Appbar/SearchButton.component";
@@ -35,7 +35,8 @@ const links = [
   {route: 'layout', name: 'Layout', icon: <Workspaces />},
   {route: 'settings', name: 'Settings', icon: <Settings />},
   {name: 'divider'},
-  {route: 'requirements', name: 'Requirements', icon: <Inventory />}
+  {route: 'requirements', name: 'Requirements', icon: <Inventory />},
+  {route: 'tutorial', name: 'How to', icon: <QuestionMark />}
 ];
 
 const addField = {id: "new", name: "+ Add project"};

@@ -104,7 +104,7 @@ const DatabaseEditor = () => {
     }
 
     try {
-      const {data} = await supabase
+      const {data, error} = await supabase
         .from('player')
         .insert({
           project_id: project,
@@ -117,7 +117,10 @@ const DatabaseEditor = () => {
           },
           lastUpdateBy: localStorage.getItem('username') || 'USR_ERROR'
         });
-        setOpenFD(false);
+
+        if (!error) {
+          setOpenFD(false);
+        }
     } catch (e) {
       console.error(e);
     }

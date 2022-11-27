@@ -7,7 +7,9 @@
     "build": "parcel build src/index.html",
     "dev": "parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
+    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
+    "prepublish": "rm -rf .parcel-cache/ && rm -rf .dist/",
+    "publish": "npm run build"
   },
   "author": "York Treinies <york.privat@gmail.com>",
   "license": "Apache-2.0",

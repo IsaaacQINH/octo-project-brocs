@@ -2,3 +2,7 @@ a {
     text-decoration: none;
     color: black;
 }
+
+.hover-underline:hover {
+    text-decoration: underline;
+}
