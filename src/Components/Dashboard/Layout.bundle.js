@@ -1,11 +1,21 @@
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
+import { useOutletContext } from "react-router-dom";
 
 const LayoutEditor = () => {
+  const project = useOutletContext();
+
   return (
     <Box>
-      
-    </Box>
+    {
+      project ?
+      <Box>
+        
+      </Box> :
+      <Box sx={{width: '100%', textAlign: 'center', mt: 10}}>
+        Select a project...
+      </Box>
+    }
+  </Box>
   );
 };
 
