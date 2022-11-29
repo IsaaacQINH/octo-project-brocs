@@ -39,7 +39,7 @@ const SettingsManager = () => {
       return 0;
     }
 
-    await navigator.clipboard.writeText(`http://${window.location.host}/join/${project}`);
+    await window.navigator.clipboard.writeText(`http://${window.location.host}/join/${project}`);
     e.target.innerText = "Copied!";
 
     setTimeout(() => {

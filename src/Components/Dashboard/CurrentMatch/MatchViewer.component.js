@@ -148,7 +148,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger, teams}) => {
     }
 
     setsbiopen(true);
-    await navigator.clipboard.writeText(`http://${window.location.host}/overlay/${projectId}/${matchId}`);
+    await window.navigator.clipboard.writeText(`http://${window.location.host}/overlay/${projectId}/${matchId}`);
   }
 
   const handleDialogClickOpen = () => {
