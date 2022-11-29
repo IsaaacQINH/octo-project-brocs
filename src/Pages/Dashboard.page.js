@@ -15,7 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { supabase } from "../Helper/supabaseClient";
 import {Avatar, Menu, TextField, Typography} from "@mui/material";
-import { Dashboard, Inventory, ListAlt, Monitor, QuestionMark, Settings, Storage, Workspaces } from "@mui/icons-material";
+import { Camera, Dashboard, Inventory, ListAlt, Monitor, QuestionMark, Settings, Storage, Workspaces } from "@mui/icons-material";
 import DrawerComponent from "../Components/Dashboard/Sidebar/Drawer.component";
 import * as React from "react";
 import SearchButton from "../Components/Dashboard/Appbar/SearchButton.component";
@@ -29,6 +29,7 @@ const links = [
   {route: '', name: 'Overview', icon: <Dashboard />},
   {name: 'divider'},
   {route: 'current', name: 'Current Match', icon: <Monitor />},
+  {route: 'playercams', name: 'Player Cams', icon: <Camera />},
   {route: 'standings', name: 'Standings', icon: <ListAlt />},
   {route: 'database', name: 'Database', icon: <Storage />},
   {name: 'divider'},

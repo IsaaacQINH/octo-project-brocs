@@ -19,6 +19,7 @@ import StringHelper from "./Helper/String";
 import Requirements from "./Components/Dashboard/Requirements.bundle";
 import JoinProject from "./Components/Website/JoinProject.bundle";
 import Tutorial from "./Components/Dashboard/Tutorial.bundle";
+import PlayerCams from "./Components/Dashboard/PlayerCam.bundle";
 
 const App = () => {
   const session = supabase.auth.session();
@@ -43,6 +44,7 @@ const App = () => {
             <Route path="dashboard" element={<DashboardPage />}>
               <Route path="" element={<Overview />} />
               <Route path="current" element={<CurrentMatch />} />
+              <Route path="playercams" element={<PlayerCams />} />
               <Route path="standings" element={<Standings />} />
               <Route path="database" element={<DatabaseEditor />} />
               <Route path="layout" element={<LayoutEditor />} />
