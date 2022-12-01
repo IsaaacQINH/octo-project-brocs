@@ -64,9 +64,10 @@ const CurrentMatch = () => {
       
       const {data} = await supabase
         .from('team')
-        .select('id, name')
+        .select('id, name, metadata')
         .eq('project_id', project)
-        .eq('deleted', false);
+        .eq('deleted', false)
+        .order('name', {ascending: true});
 
       return data;
     }

@@ -1,5 +1,6 @@
 import { forwardRef, memo, useImperativeHandle, useState, useEffect } from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 const TeamSettings = forwardRef(({teams, side}, _ref) => {
   const [team, setTeam] = useState({
@@ -41,7 +42,7 @@ const TeamSettings = forwardRef(({teams, side}, _ref) => {
         >
           {
             teams ? teams.map((value, index) => (
-              <MenuItem key={index} value={value.id}>{value.name}</MenuItem>
+              <MenuItem key={index} value={value.id}>{value.name} <span style={{color: grey.A400}}>- {value.metadata.prefix}</span></MenuItem>
             )) : <MenuItem value={team.id}>Failed to fetch</MenuItem>
           }
         </Select>
