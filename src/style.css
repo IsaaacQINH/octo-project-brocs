@@ -1,3 +1,9 @@
+@font-face {
+    font-family: LuckyLady;
+    font-weight: bold;
+    src: url("./Shared/Fonts/Lucky_Lady.otf");
+}
+
 a {
     text-decoration: none;
     color: black;
@@ -5,4 +11,8 @@ a {
 
 .hover-underline:hover {
     text-decoration: underline;
+}
+
+.ll-font {
+    font-family: 'LuckyLady', bold;
 }

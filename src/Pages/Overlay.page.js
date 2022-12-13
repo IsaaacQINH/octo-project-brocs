@@ -1,6 +1,8 @@
-import { Box } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Boostmeter from "../Components/Overlay/Boostmeter.component";
+import POVinfo from "../Components/Overlay/POVinfo.component";
 import Scoreboard from "../Components/Overlay/Scoreboard.component";
 import { supabase } from "../Helper/supabaseClient";
 
@@ -32,7 +34,9 @@ const Overlay = () => {
   if (match) {
     return (
       <Box>
-        <Scoreboard match={matchData} blue={blueData} orange={orangeData} />
+        <Scoreboard match={matchData} blue={blueData} orange={orangeData} isReplay={false}/>
+        <Boostmeter />
+        <POVinfo team={0} />
       </Box>
     );
   }
