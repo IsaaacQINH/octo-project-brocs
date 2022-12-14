@@ -2,6 +2,7 @@ import { Box, ThemeProvider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Boostmeter from "../Components/Overlay/Boostmeter.component";
+import PlayerCam from "../Components/Overlay/PlayerCam.component";
 import POVinfo from "../Components/Overlay/POVinfo.component";
 import Scoreboard from "../Components/Overlay/Scoreboard.component";
 import { supabase } from "../Helper/supabaseClient";
@@ -34,10 +35,13 @@ const Overlay = () => {
 
   if (match && user) {
     return (
-      <Box>
+      <Box sx={{width: 1920, height: 1080, background: 'black'}}>
         <Scoreboard match={matchData} blue={blueData} orange={orangeData} isReplay={false}/>
         <Boostmeter />
         <POVinfo team={1} />
+        <PlayerCam player={"test"} url={"test"} num={0} />
+        <PlayerCam player={"test"} url={"test"} num={1} />
+        <PlayerCam player={"test"} url={"test"} num={2} />
       </Box>
     );
   }
