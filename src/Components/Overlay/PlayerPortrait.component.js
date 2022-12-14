@@ -13,7 +13,7 @@ const PlayerPortrait = ({player, team}) => {
                 width: 257,
                 height: 399,
                 left:15,
-                bottom: 118,
+                bottom: 135,
                 backgroundImage: `url(${player || (team === 0 ? BLUE : ORANGE)})`
             }}
         />

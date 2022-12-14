@@ -2,8 +2,8 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import PlayerPortrait from "./PlayerPortrait.component";
 
-const BLUE = "https://imgur.com/x8fMSdy.png";
-const ORANGE = "https://imgur.com/i5e4a3s.png";
+const BLUE = "https://imgur.com/oxnGTfW.png";
+const ORANGE = "https://imgur.com/Co6CJGt.png";
 
 const POVinfo = ({player, team}) => {
     return (
@@ -11,21 +11,21 @@ const POVinfo = ({player, team}) => {
             sx={{
                 color: "white",
                 position: 'absolute',
-                width: 704,
-                height: 126,
+                width: 700,
+                height: 140,
                 left:0,
                 bottom: 0,
                 backgroundImage: `url(${team === 0 ? BLUE : ORANGE})`
             }}
         >
             <PlayerPortrait player={player} team={team} />
-            <Typography fontFamily="LuckyLady" variant="h3" sx={{position: 'absolute', left: 70, top: 0}}>NAME</Typography>
-            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 95, bottom: -6, transform: 'translateX(-50%)'}}>{0}</Typography>
-            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 200, bottom: -6, transform: 'translateX(-50%)'}}>{0}</Typography>
-            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 285, bottom: -6, transform: 'translateX(-50%)'}}>{0}</Typography>
-            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 385, bottom: -6, transform: 'translateX(-50%)'}}>{0}</Typography>
-            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 480, bottom: -6, transform: 'translateX(-50%)'}}>{0}</Typography>
-            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 580, bottom: -6, transform: 'translateX(-50%)'}}>{0}</Typography>
+            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 70, top: 0}}>NAME</Typography>
+            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 80, bottom: -7.5, transform: 'translateX(-50%)'}}>{0}</Typography>
+            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 185, bottom: -7.5, transform: 'translateX(-50%)'}}>{0}</Typography>
+            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 290, bottom: -7.5, transform: 'translateX(-50%)'}}>{0}</Typography>
+            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 390, bottom: -7.5, transform: 'translateX(-50%)'}}>{0}</Typography>
+            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 490, bottom: -7.5, transform: 'translateX(-50%)'}}>{0}</Typography>
+            <Typography fontFamily="LuckyLady" variant="h2" sx={{position: 'absolute', left: 590, bottom: -7.5, transform: 'translateX(-50%)'}}>{0}</Typography>
         </Box>
     );
 }

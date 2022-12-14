@@ -13,6 +13,20 @@ const Overlay = () => {
   const [matchData, setMatchData] = useState(null);
   const [blueData, setBlueData] = useState(null);
   const [orangeData, setOrangeData] = useState(null);
+  const [cams, setCams] = useState(null);
+
+  useEffect(async () => {
+    try {
+      const storageID = await supabase.from('project').select('storage_id').eq('id', project).single();
+      const {data} = await supabase
+        .from('project_config_key')
+        .select('*')
+        .eq('storage_id', storageID.data)
+        .like('key', 'cam%');
+    } catch (e) {
+      console.error(e);
+    }
+  }, [project, match]);
 
   useEffect(async () => {
     try {
@@ -26,6 +40,7 @@ const Overlay = () => {
         blue_wins: data?.blue_wins,
         orange_wins: data?.orange_wins
       });
+
       setBlueData(data?.blue_team);
       setOrangeData(data?.orange_team);
     } catch (e) {
@@ -39,9 +54,6 @@ const Overlay = () => {
         <Scoreboard match={matchData} blue={blueData} orange={orangeData} isReplay={false}/>
         <Boostmeter />
         <POVinfo team={1} />
-        <PlayerCam player={"test"} url={"test"} num={0} />
-        <PlayerCam player={"test"} url={"test"} num={1} />
-        <PlayerCam player={"test"} url={"test"} num={2} />
       </Box>
     );
   }
