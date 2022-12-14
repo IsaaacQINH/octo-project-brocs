@@ -23,21 +23,21 @@ import ResponsiveDialog from "../Components/Dashboard/Shared/ResponsiveDialog.co
 import DialogContentText from "@mui/material/DialogContentText";
 import {grey} from "@mui/material/colors";
 
-const drawerWidth = 225;
+const drawerWidth = 250;
 
 const links = [
   {route: '', name: 'Overview', icon: <Dashboard />},
   {name: 'divider'},
   {route: 'current', name: 'Current Match', icon: <Monitor />},
   {route: 'playercams', name: 'Player Cams', icon: <Camera />},
-  {route: 'standings', name: 'Standings', icon: <ListAlt />},
+  {route: 'standings', name: 'Standings', icon: <ListAlt />, meta: 'indev'},
   {route: 'database', name: 'Database', icon: <Storage />},
   {name: 'divider'},
-  {route: 'layout', name: 'Layout', icon: <Workspaces />},
+  {route: 'layout', name: 'Layout', icon: <Workspaces />, meta: 'indev'},
   {route: 'settings', name: 'Settings', icon: <Settings />},
   {name: 'divider'},
-  {route: 'requirements', name: 'Requirements', icon: <Inventory />},
-  {route: 'tutorial', name: 'How to', icon: <QuestionMark />}
+  {route: 'requirements', name: 'Requirements', icon: <Inventory />, meta: 'beta'},
+  {route: 'tutorial', name: 'How to', icon: <QuestionMark />, meta: 'beta'}
 ];
 
 const addField = {id: "new", name: "+ Add project"};
