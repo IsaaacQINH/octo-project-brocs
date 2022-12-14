@@ -7,6 +7,7 @@ import Scoreboard from "../Components/Overlay/Scoreboard.component";
 import { supabase } from "../Helper/supabaseClient";
 
 const Overlay = () => {
+  const user = supabase.auth.user();
   const { project, match } = useParams();
   const [matchData, setMatchData] = useState(null);
   const [blueData, setBlueData] = useState(null);
@@ -31,20 +32,25 @@ const Overlay = () => {
     }
   }, [project, match]);
 
-  if (match) {
+  if (match && user) {
     return (
       <Box>
         <Scoreboard match={matchData} blue={blueData} orange={orangeData} isReplay={false}/>
         <Boostmeter />
-        <POVinfo team={0} />
+        <POVinfo team={1} />
       </Box>
     );
   }
 
   return (
-    <Box>
-      project: {project ? project : "no project"}<br />
-    </Box>
+    <>
+      {
+        user ?
+        <Box>
+          project: {project ? project : "no project"}<br />
+        </Box> : "no user"
+      }
+    </>
   );
 };
 

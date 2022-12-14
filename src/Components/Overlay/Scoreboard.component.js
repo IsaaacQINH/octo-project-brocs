@@ -6,10 +6,6 @@ const Scoreboard = ({blue, orange, match, isReplay}) => {
     const orangeMatchPoints = new Array(match?.orange_wins);
     const topbar = !isReplay ? (match?.format.toUpperCase() || "") : "REPLAY";
 
-    blueMatchPoints.forEach((v, i, a) => {
-       
-    });
-
     for (let i = 0; i < match?.blue_wins; i++) {
         blueMatchPoints.push(
             <Box sx={{
