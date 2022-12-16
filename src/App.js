@@ -34,7 +34,9 @@ const App = () => {
   }
 
   //Load Helper once
-  StringHelper();
+  if (Object.getPrototypeOf(String) === String.prototype) {
+    StringHelper();
+  }
 
   return (
     <StrictMode>

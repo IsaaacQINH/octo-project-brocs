@@ -20,9 +20,11 @@ const Overlay = () => {
       const storageID = await supabase.from('project').select('storage_id').eq('id', project).single();
       const {data} = await supabase
         .from('project_config_key')
-        .select('*')
-        .eq('storage_id', storageID.data)
+        .select('value')
+        .eq('storage_id', storageID.data.storage_id)
         .like('key', 'cam%');
+
+        setCams(data);
     } catch (e) {
       console.error(e);
     }
@@ -52,7 +54,6 @@ const Overlay = () => {
     return (
       <Box sx={{width: 1920, height: 1080, background: 'black'}}>
         <Scoreboard match={matchData} blue={blueData} orange={orangeData} isReplay={false}/>
-        <Boostmeter />
         <POVinfo team={1} />
       </Box>
     );

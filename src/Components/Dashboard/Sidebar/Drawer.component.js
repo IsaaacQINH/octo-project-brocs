@@ -15,7 +15,7 @@ const DrawerComponent = ({links}) => {
   const linkList = links.map((value, index) => {
     if (value.name !== DIVIDERNAME && !value.meta) {
       return (
-        <NavLink to={value.route} key={index} style={({ isActive }) => isActive ? { background: '#EEEEFF' } : undefined}>
+        <NavLink to={value.route} key={index}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>{value.icon}</ListItemIcon>
@@ -26,7 +26,7 @@ const DrawerComponent = ({links}) => {
       );
     } else if (value.meta) {
       return (
-        <ListItem disablePadding>
+        <ListItem disablePadding key={index}>
           <ListItemButton disabled>
             <ListItemIcon>{value.icon}</ListItemIcon>
             <ListItemText primary={value.name} />

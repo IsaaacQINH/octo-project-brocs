@@ -40,7 +40,7 @@ const Scoreboard = ({blue, orange, match, isReplay}) => {
                 width: 222, 
                 height: 202,
                 top: 50, 
-                right: 50,
+                right: 200,
                 color: 'white',
                 backgroundImage: 'url("https://imgur.com/IG7gWpa.png")'
             }}

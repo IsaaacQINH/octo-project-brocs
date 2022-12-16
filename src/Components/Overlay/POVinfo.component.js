@@ -2,8 +2,8 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import PlayerPortrait from "./PlayerPortrait.component";
 
-const BLUE = "https://imgur.com/oxnGTfW.png";
-const ORANGE = "https://imgur.com/Co6CJGt.png";
+const BLUE = "https://imgur.com/ZrE9yiw.png";
+const ORANGE = "https://imgur.com/BfjSGRi.png";
 
 const POVinfo = ({player, team}) => {
     return (
