@@ -14,6 +14,7 @@ const JoinProject = () => {
     const [fetchedProject, setFProject] = useState(null);
 
     useEffect(async () => {
+        const controller = new AbortController();
         if (!user) {
             return <Navigate to="/login" />;
         }
@@ -82,6 +83,8 @@ const JoinProject = () => {
         } catch (e) {
             console.error(e);
         }
+
+        return () => controller.abort();
     }, [user]);
 
 

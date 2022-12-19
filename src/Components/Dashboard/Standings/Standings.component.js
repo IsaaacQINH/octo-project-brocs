@@ -17,6 +17,7 @@ const StandingsTable = ({project}) => {
   const [rows, setRows] = useState([]);
 
   useEffect(async () => {
+    const controller = new AbortController();
     try {
       if (!project) {
         setRows([]);
@@ -47,6 +48,8 @@ const StandingsTable = ({project}) => {
     } catch (e) {
       console.error(e)
     }
+
+    return () => controller.abort();
   }, [project]);
 
   return (

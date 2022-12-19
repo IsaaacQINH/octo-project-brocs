@@ -20,6 +20,7 @@ const CurrentMatch = () => {
   const [selected, setSelected] = useState(null);
 
   useEffect(async () => {
+    const controller = new AbortController();
     const memSelected = selected;
     const getMatches = async (memS) => {
       if (project === "") {
@@ -86,6 +87,8 @@ const CurrentMatch = () => {
     } catch (e) {
       console.error(e);
     }
+
+    return () => controller.abort();
   }, [project, updateTrigger]);
 
   const handleUpdateSelectedMatch = (id) => {

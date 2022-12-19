@@ -9,6 +9,7 @@ const CamLinks = ({sid, name}) => {
     const [camlink, setCamLink] = useState({url: "", player: ""});
 
     useEffect(async () => {
+        const controller = new AbortController();
         if (!sid) {
             return;
         }
@@ -28,6 +29,7 @@ const CamLinks = ({sid, name}) => {
         }
         
         setLoading(false);
+        return () => controller.abort();
     }, [sid]);
 
     const handleChange = (e) => {

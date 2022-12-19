@@ -12,6 +12,7 @@ const SettingsManager = () => {
   const [people, setPeople] = useState([]);
 
   useEffect(async () => {
+    const controller = new AbortController();
     try {
       if (!project) {
         return setConfig(null);
@@ -34,10 +35,15 @@ const SettingsManager = () => {
     } catch (e) {
       console.error("Couldn't fetch project settings!");
     }
+
+    return () => controller.abort();
   }, [project]);
 
   useEffect(async () => {
+    const controller = new AbortController();
     await userFromId();
+
+    return () => controller.abort();
   }, [config]);
 
   const userFromId = async () => {
