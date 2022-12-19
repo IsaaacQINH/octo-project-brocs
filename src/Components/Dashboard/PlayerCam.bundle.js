@@ -13,6 +13,7 @@ const PlayerCams = () => {
     const [sid, setSid] = useState(null);
 
     useEffect(async () => {
+      const controller = new AbortController();
       if (!project) {
         return;
       }
@@ -28,6 +29,8 @@ const PlayerCams = () => {
       } catch (e) {
         console.error(e);
       }
+
+      return () => controller.abort();
     }, [project]);
 
     return (

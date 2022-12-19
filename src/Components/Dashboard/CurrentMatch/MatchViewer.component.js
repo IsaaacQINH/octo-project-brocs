@@ -20,6 +20,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger, teams}) => {
   const [snackbarsuccessopen, setsbsopen] = useState(false);
 
   useEffect(async () => {
+    const controller = new AbortController();
     if (matchId === "new") {
       generalSettingsRef.current?.setSettings({
         name: "",
@@ -74,6 +75,7 @@ const MatchViewer = ({matchId, projectId, handleUpdateTrigger, teams}) => {
     }
 
     getMatchData(matchId).then().catch();
+    return () => controller.abort();
   }, [matchId]);
 
   const handleUpdate = async () => {

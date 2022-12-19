@@ -51,6 +51,7 @@ const DatabaseEditor = () => {
   const teamRef = useRef();
 
   useEffect(async () => {
+    const controller = new AbortController();
     if (!project) {
       setTeam([]);
       setPlayers([]);
@@ -64,6 +65,7 @@ const DatabaseEditor = () => {
       setPlayers(await getPlayer(project));
     }
     setLoading(false);
+    return () => controller.abort();
   }, [table, project]);
 
   const handleTableSelection = async (e) => {

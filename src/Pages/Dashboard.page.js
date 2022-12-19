@@ -55,6 +55,7 @@ const DashboardPage = ({ wdw }) => {
   const user = supabase.auth.user();
 
   useEffect(async () => {
+    const controller = new AbortController();
     const getProjects = async () => {
 
       if (!user) {
@@ -100,6 +101,7 @@ const DashboardPage = ({ wdw }) => {
       console.error(e);
     }
 
+    return () => controller.abort();
   }, [user]);
 
   const handleOpenUserMenu = (event) => {
