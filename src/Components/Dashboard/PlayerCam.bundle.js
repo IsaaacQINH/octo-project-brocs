@@ -35,7 +35,7 @@ const PlayerCams = () => {
         {
           project ?
           <Box>
-            <Grid container spacing={2} sx={{px: { xs: 2, lg: 35}, mt: 2}}>
+            <Grid container spacing={2} sx={{px: { xs: 2, lg: 15}, mt: 2}}>
               <GridHeadline main="Player" sub="_player_" />
               <Grid item xs={12}>
                   <Typography variant="body1">Team Blue</Typography>
@@ -53,7 +53,8 @@ const PlayerCams = () => {
                   }
                 </Grid>
               <GridHeadline main="Caster" sub="_caster_" />
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{textAlign: 'center'}}>
+                --- WIP ---
               </Grid>
             </Grid>
           </Box> :

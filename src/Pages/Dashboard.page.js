@@ -163,6 +163,17 @@ const DashboardPage = ({ wdw }) => {
             storage_global_id: '83ae7887-f6ea-4bce-bf04-b8169ce9022a'
           }).single();
 
+      const people = await supabase
+          .from('project_config_key')
+          .insert({
+            storage_id: projectStorage.data.id, 
+            key: 'people', 
+            value: JSON.stringify([user.id]), 
+            type: 'json', 
+            required: true,
+            lastUpdateBy: localStorage.getItem("username") || "USR_ERR"
+          }).single();
+
       existing.push(data.id);
 
       const {error} = await supabase

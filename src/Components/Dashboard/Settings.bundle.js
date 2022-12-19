@@ -9,6 +9,7 @@ import GridHeadline from "./Shared/GridHeadline.component";
 const SettingsManager = () => {
   const project = useOutletContext();
   const [config, setConfig] = useState(null);
+  const [people, setPeople] = useState([]);
 
   useEffect(async () => {
     try {
@@ -34,6 +35,27 @@ const SettingsManager = () => {
       console.error("Couldn't fetch project settings!");
     }
   }, [project]);
+
+  useEffect(async () => {
+    await userFromId();
+  }, [config]);
+
+  const userFromId = async () => {
+    if (!config) {
+      return;
+    }
+
+    try {
+      const {data} = await supabase
+        .from('user')
+        .select('name, full_name')
+        .in('id', JSON.parse(config.filter(c => c.key === "people")[0].value));
+
+      setPeople(data);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   const handleCopyInviteURL = async (e) => {
     if (!project) {
@@ -66,6 +88,11 @@ const SettingsManager = () => {
             </Grid>
             <GridHeadline main="People" sub="_people_" />
             <Grid item xs={12}>
+              { people ?
+                people.map((v, i) => (
+                  <Typography variant="body1" key={i}>{v.name}</Typography>
+                )) : "Error fetching people"
+              }
             </Grid>
           </Grid>
         </Box> :

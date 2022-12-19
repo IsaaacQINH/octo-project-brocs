@@ -18,6 +18,10 @@ const JoinProject = () => {
             return <Navigate to="/login" />;
         }
 
+        if (!project) {
+            return <Navigate to="/login" />;
+        }
+
         try {
             setLoading(true);
     
@@ -41,7 +45,7 @@ const JoinProject = () => {
                 .single();
     
             if (fetchedUserProjects.data.projects.includes(data.id)) {
-                setEvent("CONTAIN")
+                setEvent("CONTAIN");
                 setLoading(false);
                 return;
             }
@@ -52,9 +56,29 @@ const JoinProject = () => {
                 .from('user')
                 .update({projects: fetchedUserProjects.data.projects})
                 .eq('id', user.id);
+
+            const storage = await supabase
+                .from('project')
+                .select('storage_id')
+                .eq('id', project).single();
+
+            const people = await supabase
+                .from('project_config_key')
+                .select('value')
+                .eq('storage_id', storage.data.storage_id)
+                .eq('key', 'people');
+
+            const existingPeople = JSON.parse(people.data[0].value);
+            existingPeople.push(user.id);
+
+            await supabase
+                .from('project_config_key')
+                .update({value: JSON.stringify(existingPeople), lastUpdateBy: localStorage.getItem("username") || "USR_ERR"})
+                .eq('storage_id', storage.data.storage_id)
+                .eq('key', 'people');
     
             setLoading(false);
-            setEvent("JOIN")
+            setEvent("JOIN");
         } catch (e) {
             console.error(e);
         }

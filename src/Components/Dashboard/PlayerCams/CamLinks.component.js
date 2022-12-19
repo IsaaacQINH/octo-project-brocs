@@ -128,10 +128,10 @@ const CamLinks = ({sid, name}) => {
                 onChange={handleChange} />
             </Grid>
             <Grid item xs={6} md={2}>
-                <Button sx={{py: 0.85}} fullWidth variant="outlined" color="warning" startIcon={<ArrowBack />} onClick={handleReset} disabled={action === "reset" ? true : false}>{action === "reset" ? "Wait..." : "Reset"}</Button>
+                <Button sx={{py: 0.85}} fullWidth variant="outlined" color="warning" startIcon={<ArrowBack />} onClick={handleReset} disabled={action !== "idle" ? true : false}>{action === "reset" ? "Wait..." : "Reset"}</Button>
             </Grid>
             <Grid item xs={6} md={2}>
-                <Button sx={{py: 0.85}} fullWidth variant="outlined" color="success" startIcon={<Save />} onClick={handleSave} disabled={action === "saving" ? true : false}>{action === "saving" ? "Saving" : "Save"}</Button>
+                <Button sx={{py: 0.85}} fullWidth variant="outlined" color="success" startIcon={<Save />} onClick={handleSave} disabled={action !== "idle" ? true : false}>{action === "saving" ? "Saving" : "Save"}</Button>
             </Grid>
         </Grid> :
         <Skeleton sx={{px: { xs: 2, lg: 5}}} height={50} />
