@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../Helper/supabaseClient";
 import { Button, Grid, Typography } from "@mui/material";
 import GridHeadline from "./Shared/GridHeadline.component";
+import ProjectMember from "./Settings/ProjectMember.component";
 
 const SettingsManager = () => {
   const project = useOutletContext();
@@ -81,7 +82,7 @@ const SettingsManager = () => {
       {
         project ?
         <Box>
-          <Grid container spacing={2} sx={{px: { xs: 2, lg: 35}, mt: 2}}>
+          <Grid container spacing={2} sx={{px: { xs: 2, lg: 25}, mt: 2}}>
             <GridHeadline main="Settings" sub="_settings_" />
             <Grid item xs={12}>
               <Typography variant="body1" sx={{mt: 2, textAlign: 'center'}}>Coming soon: settings</Typography>
@@ -96,7 +97,7 @@ const SettingsManager = () => {
             <Grid item xs={12}>
               { people ?
                 people.map((v, i) => (
-                  <Typography variant="body1" key={i}>{v.name}</Typography>
+                  <ProjectMember name={v.name} key={i}/>
                 )) : "Error fetching people"
               }
             </Grid>
