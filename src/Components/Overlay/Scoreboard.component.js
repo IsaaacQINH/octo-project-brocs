@@ -5,16 +5,18 @@ const Scoreboard = ({blue, orange, match, isReplay}) => {
     const blueMatchPoints = new Array(match?.blue_wins);
     const orangeMatchPoints = new Array(match?.orange_wins);
     const topbar = !isReplay ? (match?.format.toUpperCase() || "") : "REPLAY";
+    const [scoreWidth, scoreHeight] = match?.format === "Bo3" ? [9, 38] : [9, 28];
+
 
     for (let i = 0; i < match?.blue_wins; i++) {
         blueMatchPoints.push(
             <Box sx={{
                 position: 'absolute',
-                width: 14,
-                height: 30,
-                bottom: 52.5 + (i * 30),
-                left: 3.5,
-                backgroundImage: 'url("https://imgur.com/aelFdhK.png")'
+                width: scoreWidth,
+                height: scoreHeight,
+                bottom: 53.5 + (i * (scoreHeight + 2)),
+                left: 7,
+                background: 'yellow',
             }}
         />);
         
@@ -24,11 +26,11 @@ const Scoreboard = ({blue, orange, match, isReplay}) => {
         blueMatchPoints.push(
             <Box sx={{
                 position: 'absolute',
-                width: 14,
-                height: 30,
-                bottom: 52.5 + (i * 30),
-                right: 2.5,
-                backgroundImage: 'url("https://imgur.com/aelFdhK.png")'
+                width: scoreWidth,
+                height: scoreHeight,
+                bottom: 53.5 + (i * (scoreHeight + 2)),
+                right: 4,
+                background: 'yellow'
             }}
         />);
         
