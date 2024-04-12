@@ -22,15 +22,18 @@ import Tutorial from "./Components/Dashboard/Tutorial.bundle";
 import PlayerCams from "./Components/Dashboard/PlayerCam.bundle";
 
 const App = () => {
-  const session = supabase.auth.session();
+  // const session = supabase.auth.session();
   const user = supabase.auth.user();
 
   if (!user) {
-    localStorage.removeItem('username');
+    localStorage.removeItem("username");
   }
 
-  if (user && localStorage.getItem('username') !== user.user_metadata.full_name) {
-    localStorage.setItem('username', user.user_metadata.full_name);
+  if (
+    user &&
+    localStorage.getItem("username") !== user.user_metadata.full_name
+  ) {
+    localStorage.setItem("username", user.user_metadata.full_name);
   }
 
   //Load Helper once
@@ -38,33 +41,36 @@ const App = () => {
 
   return (
     <StrictMode>
-        <CssBaseline />
-        <BrowserRouter>
-          <Routes>
-            <Route path="dashboard" element={<DashboardPage />}>
-              <Route path="" element={<Overview />} />
-              <Route path="current" element={<CurrentMatch />} />
-              <Route path="playercams" element={<PlayerCams />} />
-              <Route path="standings" element={<Standings />} />
-              <Route path="database" element={<DatabaseEditor />} />
-              <Route path="layout" element={<LayoutEditor />} />
-              <Route path="settings" element={<SettingsManager />} />
-              <Route path="requirements" element={<Requirements />} />
-              <Route path="tutorial" element={<Tutorial />} />
-            </Route>
-            <Route path="" element={<WebsitePage />}>
-              <Route path="" element={<Home />} />
-              <Route path="about" element={<About />} />
-            </Route>
-            <Route path="overlay" element={<Navigate to="/dashboard/current" />} />
-            <Route path="overlay/:project" element={<OverlayPage />} />
-            <Route path="overlay/:project/:match" element={<OverlayPage />} />
-            <Route path="login" element={<Login />} />
-            <Route path="logout" element={<About />} />
-            <Route path="join" element={<Navigate to="/" />} />
-            <Route path="join/:project" element={<JoinProject />} />
-          </Routes>
-        </BrowserRouter>
+      <CssBaseline />
+      <BrowserRouter>
+        <Routes>
+          <Route path="dashboard" element={<DashboardPage />}>
+            <Route path="" element={<Overview />} />
+            <Route path="current" element={<CurrentMatch />} />
+            <Route path="playercams" element={<PlayerCams />} />
+            <Route path="standings" element={<Standings />} />
+            <Route path="database" element={<DatabaseEditor />} />
+            <Route path="layout" element={<LayoutEditor />} />
+            <Route path="settings" element={<SettingsManager />} />
+            <Route path="requirements" element={<Requirements />} />
+            <Route path="tutorial" element={<Tutorial />} />
+          </Route>
+          <Route path="" element={<WebsitePage />}>
+            <Route path="" element={<Home />} />
+            <Route path="about" element={<About />} />
+          </Route>
+          <Route
+            path="overlay"
+            element={<Navigate to="/dashboard/current" />}
+          />
+          <Route path="overlay/:project" element={<OverlayPage />} />
+          <Route path="overlay/:project/:match" element={<OverlayPage />} />
+          <Route path="login" element={<Login />} />
+          <Route path="logout" element={<About />} />
+          <Route path="join" element={<Navigate to="/" />} />
+          <Route path="join/:project" element={<JoinProject />} />
+        </Routes>
+      </BrowserRouter>
     </StrictMode>
   );
 };

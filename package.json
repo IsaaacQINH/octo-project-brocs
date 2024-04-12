@@ -5,7 +5,7 @@
   "homepage": "https://isaaacqinh.github.io/octo-project-brocs",
   "scripts": {
     "build": "parcel build src/index.html",
-    "dev": "parcel src/index.html",
+    "dev": "REACT_APP_SUPABASE_URL=https://fwrnggpojxwetljndmam.supabase.co REACT_APP_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3cm5nZ3Bvanh3ZXRsam5kbWFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTkzOTgwMzAsImV4cCI6MTk3NDk3NDAzMH0.gccChGHGT5olRBq5EL1qqZkAp81lYeZ_A-GnkeXIzgk parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
     "prepublish": "rm -rf .parcel-cache/ && rm -rf dist/",
